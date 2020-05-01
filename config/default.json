@@ -1,4 +1,4 @@
 {
-    "mongoURI": "mongodb+srv://developer_ops:51170228@testcluster-xt31q.mongodb.net/test?retryWrites=true&w=majority",
-    "jwtSecret" : "secretToken"
+    "mongoURI": "mongodb+srv://<user>:<pass>@testcluster-xt31q.mongodb.net/test?retryWrites=true&w=majority",
+    "jwtSecret" : "<secret>"
 }
