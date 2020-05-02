@@ -17,6 +17,25 @@ const UserSchema = new mongoose.Schema({
     mobile: {
         type: String
     },
+    savedWebinars: [
+        {
+            title: {
+                type: String
+            },
+            date: {
+                type: String
+            },
+            description: {
+                type: String
+            },
+            Url: {
+                type: String
+            },
+            image: {
+                type: String
+            }
+        }
+    ],
     avatar: {
         type: String
     }
