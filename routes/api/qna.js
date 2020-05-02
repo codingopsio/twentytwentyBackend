@@ -33,4 +33,18 @@ route.post('/' , [auth , checks] , async (req , res) => {
         return res.json(500).json({ msg: "Server error QNA" });
     }
 });
+
+//@desc GET a ques or ans
+//@method GET
+//@access private
+route.get('/' , [auth] , async (req , res) => {
+    try {
+        const allqna = await QNA.find();
+        res.json(allqna);
+    } catch (error) {
+        console.error(error);
+        return res.json(500).json({ msg: "Server error GET QNA" });
+    }
+});
+
 module.exports = route;
