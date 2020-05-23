@@ -7,8 +7,9 @@ This is going to be Extensive API's that we'll create from scratch. Please read 
 ### Free Webinars
 
 - List all webinars in the database
-  _ Pagination
-  _ Limit number of results per page \* Filtering by category (eg: react/node/css/javascript ... )
+  Pagination
+  Limit number of results per page
+  \_ Filtering by category (eg: react/node/css/javascript ... )
 - Get single webinar
 - Create/Add new Webinar
   _ Must be a Admin, not for a user
