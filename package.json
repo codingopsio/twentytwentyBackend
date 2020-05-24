@@ -1,0 +1,30 @@
+{
+  "name": "twentytwentybackend",
+  "version": "1.0.0",
+  "description": "Backend Extensive API's",
+  "main": "server.js",
+  "scripts": {
+    "start": "SET NODE_ENV=production & node server",
+    "dev": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codingopsio/twentytwentyBackend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codingopsio/twentytwentyBackend/issues"
+  },
+  "homepage": "https://github.com/codingopsio/twentytwentyBackend#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.15",
+    "morgan": "^1.10.0"
+  }
+}
