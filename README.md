@@ -6,7 +6,7 @@ This is going to be Extensive API's that we'll create from scratch. Please read 
 
 Before you start contributing, make a pull request to contributors.md file (Important)
 
-## Code Basic Structure
+## Basic Code Structure (We will follow this structure throughout this project)
 
 - NPM scripts for dev and production env
 - Config file for important constants
