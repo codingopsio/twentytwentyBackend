@@ -10,8 +10,24 @@ Before you start contributing, make a pull request to contributors.md file
 
 - List all webinars in the database
   - Pagination
+  - Limit number of results per page
+  - Filtering by category (eg: react/node/css/javascript ... )
+- Get single webinar
+- Create/Add new Webinar
+  - Must be a Admin, not for a user
+  - Must be Authenticated
+  - Field validation via Mongoose
+- Upload photo for Webinar
+  - Again for Admins only
+  - Photo will be uploaded to local file system
+- Update Webinars
+  - Admin Only
+  - Validation on update
+- Delete Webinar
+  - Admin only
+- Calculate the average rating from the reviews for a webinar
 
-* Pagination
+<!-- * Pagination
 * Limit number of results per page
   \_ Filtering by category (eg: react/node/css/javascript ... )
 
@@ -26,4 +42,4 @@ Before you start contributing, make a pull request to contributors.md file
   _ Admin Only
   _ Validation on update
 - Delete Webinar \* Admin only
-- Calculate the average rating from the reviews for a webinar
+- Calculate the average rating from the reviews for a webinar -->
