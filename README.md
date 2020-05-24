@@ -15,6 +15,8 @@ Before you start contributing, make a pull request to contributors.md file (Impo
 - Validation using Mongoose and no external libraries
 - Use async/await
 
+## Now the current features we're going to work on
+
 ### Free Webinars
 
 - List all webinars in the database
