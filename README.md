@@ -49,8 +49,18 @@ Before you start contributing, make a pull request to contributors.md file (Impo
   - Authenticated users only
 - Update review
   - Only the owner of the review
-  - Owner only
 - Delete review
+
+### Q&A
+
+- List all questions for a webinar
+- Get a single question
+  - Shows along with the number of replies the Question got
+- Reply for a single question
+  - User must be authenticated who is replying
+- Update question
+  - Only the owner of the question
+- Delete Question
 
 ### Users & Authentication
 
