@@ -49,8 +49,8 @@ Before you start contributing, make a pull request to contributors.md file (Impo
   - Authenticated users only
 - Update review
   - Only the owner of the review
-    -Delete review
   - Owner only
+- Delete review
 
 ### Users & Authentication
 
@@ -71,6 +71,7 @@ Before you start contributing, make a pull request to contributors.md file (Impo
 - Password reset (lost password)
   - User can request to reset password
   - A hashed token will be emailed to the users registered email address
+  - For emailing we'll use SendGrid
   - A put request can be made to the generated url to reset password
   - The token will expire after 10 minutes
 - Update user info
