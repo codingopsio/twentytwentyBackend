@@ -4,9 +4,12 @@ This is the backend part of our Courses/Webinar project, the frontend part is in
 
 This is going to be Extensive API's that we'll create from scratch. Please read them carefully.
 
+Before you start contributing, make a pull request to contributors.md file
+
 ### Free Webinars
 
 - List all webinars in the database
+  - Pagination
 
 * Pagination
 * Limit number of results per page
