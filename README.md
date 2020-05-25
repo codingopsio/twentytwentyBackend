@@ -39,7 +39,7 @@ npm start
 - Validation using Mongoose and no external libraries
 - Use async/await
 
-## Now the current features we're going to work on
+## Now the current features we're going to work on, are listed below
 
 ### Free Webinars
 
