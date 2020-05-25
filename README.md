@@ -1,10 +1,34 @@
 # Courses/Webinar Project Backend API Specifications
 
-This is the backend part of our Courses/Webinar project, the frontend part is in this Repository https://github.com/codingopsio/twentytwentyFrontend . All the functionality below needs to be implemented in this project.
+> This is the backend part of our Courses/Webinar project, the frontend part is in this Repository https://github.com/codingopsio/twentytwentyFrontend . All the functionality below needs to be implemented in this project.
 
-This is going to be Extensive API's that we'll create from scratch. Please read them carefully.
+> This is going to be Extensive API's that we'll create from scratch. Please read them carefully.
 
-Before you start contributing, make a pull request to contributors.md file (Important)
+## Usage (Important)
+
+Before you start contributing, make a pull request to contributors.md file
+
+Rename "config/config.env.env" to "config/config.env" and update the values/settings to your own
+
+## Install Dependencies
+
+```
+npm install
+```
+
+## Run App
+
+```
+# Run in dev mode
+npm run dev
+
+# Run in production mode
+npm start
+```
+
+### Version 1.0.0
+
+### License: MIT
 
 ## Basic Code Structure (We will follow this structure throughout this project)
 
