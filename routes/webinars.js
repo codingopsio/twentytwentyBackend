@@ -1,9 +1,8 @@
 const express = require('express');
+const { createWebinar, getWebinars } = require('../controllers/webinars');
 
 const router = express.Router();
 
-router.get('/', function (req, res) {
-  res.status(200).json({ success: true, data: 'This is from webinar router' });
-});
+router.route('/').get(getWebinars).post(createWebinar);
 
 module.exports = router;

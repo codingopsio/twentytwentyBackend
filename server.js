@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const morgan = require('morgan');
 const connectDB = require('./config/db');
+const errorHandler = require('./middleware/error');
 
 // Load env vars
 dotenv.config({ path: './config/config.env' });
@@ -15,6 +16,9 @@ const webinars = require('./routes/webinars');
 
 const app = express();
 
+// Body Parser
+app.use(express.json());
+
 // Development logging middleware
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -23,6 +27,9 @@ if (process.env.NODE_ENV === 'development') {
 // Mount Routers
 app.use('/api/v1/webinars', webinars);
 
+app.use(errorHandler);
+
+// Connection to server
 const PORT = process.env.PORT || 5000;
 
 const server = app.listen(
