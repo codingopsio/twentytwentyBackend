@@ -30,7 +30,7 @@ npm start
 
 ### License: MIT
 
-## Basic Code Structure (We will follow this structure throughout this project)
+## Basic Code Structure (We will follow this structure throughout the project)
 
 - NPM scripts for dev and production env
 - Config file for important constants
