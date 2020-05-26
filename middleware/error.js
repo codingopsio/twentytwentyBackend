@@ -2,11 +2,14 @@ const ErrorResponse = require('../utils/errorResponse');
 
 const errorHandler = (err, req, res, next) => {
   let error = { ...err };
+
+  error.message = err.message;
+
   let message;
 
   // Mongoose Validation error
   if (err.name === 'ValidationError') {
-    message = `${err.errors.title.message}`;
+    message = `Webinar Validation failed`;
     error = new ErrorResponse(message, 404);
   }
 
@@ -18,7 +21,7 @@ const errorHandler = (err, req, res, next) => {
 
   // Mongoose bad ObjectId error
   if (err.name === 'CastError') {
-    message = `Resource not found with id of ${err.value}`;
+    message = `Resource not found with id of id ${err.value}`;
     error = new ErrorResponse(message, 404);
   }
 

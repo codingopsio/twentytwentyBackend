@@ -36,9 +36,13 @@ const WebinarSchema = new mongoose.Schema({
     type: String,
     default: 'no-photo.jpg',
   },
-  CourseStructure: [String],
-  difficulty: {
+  CourseStructure: {
     type: [String],
+    required: true,
+    validate: [(value) => value.length > 0],
+  },
+  difficulty: {
+    type: String,
     required: true,
     enum: ['Beginner', 'Intermediate', 'Advanced'],
   },
