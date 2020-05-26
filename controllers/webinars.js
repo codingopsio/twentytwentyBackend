@@ -6,7 +6,26 @@ const Webinar = require('../models/Webinar');
 // @access - Public
 exports.getWebinars = async (req, res, next) => {
   try {
-    let webinars = await Webinar.find();
+    console.log(req.query);
+
+    // Advanced Filtering
+    let queryString = { ...req.query };
+    let fields;
+
+    // If the **select** is present in the query then deleting it first and spliting the fields of **select**, then passing it to final query
+    if (req.query.select) {
+      const deleted = delete queryString.select;
+      fields = req.query.select.split(',').join(' ');
+    }
+
+    // Filtering for category - eg: Fullstack, Frontend, Nodejs
+    let query = JSON.stringify(queryString);
+
+    query = query.replace('in', '$in');
+
+    query = await Webinar.find(JSON.parse(query)).select(fields);
+
+    let webinars = await query;
 
     res.status(200).json({
       success: true,

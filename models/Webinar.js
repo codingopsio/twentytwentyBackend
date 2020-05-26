@@ -23,7 +23,7 @@ const WebinarSchema = new mongoose.Schema({
     ],
   },
   plan: {
-    type: [String],
+    type: String,
     required: true,
     enum: ['Free', 'Paid'],
   },
@@ -39,6 +39,26 @@ const WebinarSchema = new mongoose.Schema({
   CourseStructure: {
     type: [String],
     required: true,
+    validate: [(value) => value.length > 0],
+  },
+  ManageTopics: {
+    type: [String],
+    required: true,
+    enum: [
+      'Javascript',
+      'Fullstack',
+      'Frontend',
+      'Backend',
+      'Mobile Development',
+      'React',
+      'Node',
+      'Angular',
+      'Docker',
+      'AWS',
+      'Python',
+      'Css',
+      'React Native',
+    ],
     validate: [(value) => value.length > 0],
   },
   difficulty: {
