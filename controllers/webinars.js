@@ -14,22 +14,54 @@ exports.getWebinars = async (req, res, next) => {
 
     // If the **select** is present in the query then deleting it first and spliting the fields of **select**, then passing it to final query
     if (req.query.select) {
-      const deleted = delete queryString.select;
+      const selectFieldDelete = delete queryString.select;
       fields = req.query.select.split(',').join(' ');
+    }
+
+    // For pagination, If **page** is present in the query, then deleting that
+    if (req.query.page) {
+      const pageFieldDelete = delete queryString.page;
+    }
+
+    if (req.query.limit) {
+      const limitFieldDelete = delete queryString.limit;
     }
 
     // Filtering for category - eg: Fullstack, Frontend, Nodejs
     let query = JSON.stringify(queryString);
-
     query = query.replace('in', '$in');
 
-    query = await Webinar.find(JSON.parse(query)).select(fields);
+    //  Pagination Logic
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 5;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const total = await Webinar.countDocuments();
+
+    // For Previous & Next Page
+    let pagination = {
+      currentPage: page,
+    };
+
+    if (endIndex < total) {
+      pagination.nextPage = page + 1;
+    }
+
+    if (startIndex > page || startIndex === page) {
+      pagination.prevPage = page - 1;
+    }
+
+    query = await Webinar.find(JSON.parse(query))
+      .skip(startIndex)
+      .limit(limit)
+      .select(fields);
 
     let webinars = await query;
 
     res.status(200).json({
       success: true,
       count: webinars.length,
+      pagination,
       data: webinars,
     });
   } catch (err) {
