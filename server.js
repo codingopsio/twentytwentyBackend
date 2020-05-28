@@ -15,6 +15,7 @@ connectDB();
 
 // Load Route Files
 const webinars = require('./routes/webinars');
+const auth = require('./routes/auth');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount Routers
 app.use('/api/v1/webinars', webinars);
+app.use('/api/v1/auth', auth);
 
 app.use(errorHandler);
 
