@@ -12,7 +12,7 @@ exports.getWebinars = async (req, res, next) => {
     let queryString = { ...req.query };
     let fields;
 
-    // If the **select** is present in the query then deleting it first and spliting the fields of **select**, then passing it to final query
+    // For pagination, If **select** is present in the query, then deleting that
     if (req.query.select) {
       const selectFieldDelete = delete queryString.select;
       fields = req.query.select.split(',').join(' ');
@@ -23,6 +23,7 @@ exports.getWebinars = async (req, res, next) => {
       const pageFieldDelete = delete queryString.page;
     }
 
+    // For pagination, If **limit** is present in the query, then deleting that
     if (req.query.limit) {
       const limitFieldDelete = delete queryString.limit;
     }
@@ -152,6 +153,61 @@ exports.deleteWebinar = async (req, res, next) => {
     res.status(200).json({
       success: true,
       data: {},
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// @desc - Photo Upload for  webinar
+// @route - POST api/v1/ webinars/:id/photo
+// @access - Private
+exports.uploadPhoto = async (req, res, next) => {
+  try {
+    let webinar = await Webinar.findById(req.params.id);
+
+    if (!webinar) {
+      return next(
+        new ErrorResponse(
+          `Sorry, no webinar found with this id ${req.params.id}`,
+          404
+        )
+      );
+    }
+
+    const file = req.files.file;
+
+    if (!file.mimetype.startsWith('image')) {
+      return next(
+        new ErrorResponse(`Error in uploading file ${file.name}`, 400)
+      );
+    }
+
+    if (file.size > process.env.MAX_PHOTO_SIZE) {
+      return next(
+        new ErrorResponse(`The image ${file.name} is too large to upload`, 400)
+      );
+    }
+
+    file.mv(`${process.env.PHOTO_UPLOAD_PATH}/${file.name}`, async (err) => {
+      if (err) {
+        return next(new ErrorResponse(`Error in uploading`, 400));
+      }
+    });
+
+    webinar = await Webinar.findByIdAndUpdate(
+      req.params.id,
+      {
+        photo: file.name,
+      },
+      {
+        new: true,
+      }
+    );
+
+    res.status(200).json({
+      success: true,
+      data: webinar,
     });
   } catch (err) {
     next(err);

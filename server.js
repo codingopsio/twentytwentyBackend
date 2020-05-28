@@ -1,9 +1,11 @@
+const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
 const morgan = require('morgan');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
+const fileUpload = require('express-fileupload');
 
 // Load env vars
 dotenv.config({ path: './config/config.env' });
@@ -23,6 +25,12 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+// Initializing middleware for fileupload
+app.use(fileUpload());
+
+// Making the public folder static to access from anywhere
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount Routers
 app.use('/api/v1/webinars', webinars);
