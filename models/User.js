@@ -47,7 +47,7 @@ UserSchema.pre('save', async function (next) {
 // Generate token after register or signin
 UserSchema.methods.generateToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: '7d',
+    expiresIn: process.env.JWT_TOKEN_EXPIRE,
   });
 };
 

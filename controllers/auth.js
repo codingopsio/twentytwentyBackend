@@ -17,7 +17,19 @@ exports.registerUser = async (req, res, next) => {
 
     const token = user.generateToken();
 
-    res.status(200).json({
+    // generating a cookie
+    const options = {
+      expires: new Date(
+        Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+      ),
+      httpOnly: true,
+    };
+
+    if (process.env.NODE_ENV === 'production') {
+      options.secure = true;
+    }
+
+    res.status(200).cookie('token', token, options).json({
       success: true,
       token,
     });
@@ -56,9 +68,19 @@ exports.loginUser = async (req, res, next) => {
     // Generate Token now
     const token = user.generateToken();
 
-    console.log(req);
+    // Generating a cookie
+    const options = {
+      expires: new Date(
+        Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+      ),
+      httpOnly: true,
+    };
 
-    res.status(200).json({
+    if (process.env.NODE_ENV === 'production') {
+      options.secure = true;
+    }
+
+    res.status(200).cookie('token', token, options).json({
       success: true,
       token,
     });
@@ -72,6 +94,12 @@ exports.loginUser = async (req, res, next) => {
 // @access - Private
 exports.getLoggedInUser = async (req, res, next) => {
   try {
+    const user = await User.findOne({ email: req.user.email });
+
+    res.status(200).json({
+      success: true,
+      data: user,
+    });
   } catch (err) {
     next(err);
   }
