@@ -10,8 +10,17 @@ const {
 
 const router = express.Router();
 
-router.route('/').get(getWebinars).post(createWebinar);
-router.route('/:id').get(getWebinar).put(updateWebinar).delete(deleteWebinar);
-router.route('/:id/photo').post(uploadPhoto);
+const { protect, authorize } = require('../middleware/auth');
+
+router
+  .route('/')
+  .get(getWebinars)
+  .post(protect, authorize('admin'), createWebinar);
+router
+  .route('/:id')
+  .get(getWebinar)
+  .put(protect, authorize('admin'), updateWebinar)
+  .delete(protect, authorize('admin'), deleteWebinar);
+router.route('/:id/photo').post(protect, authorize('admin'), uploadPhoto);
 
 module.exports = router;
