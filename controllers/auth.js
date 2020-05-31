@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const User = require('../models/User');
 const ErrorResponse = require('../utils/errorResponse');
 const jwt = require('jsonwebtoken');
@@ -216,3 +217,98 @@ exports.updatePassword = async (req, res, next) => {
 // @desc - Forgot Password
 // @route - POST api/v1/ auth/forgotpassword
 // @access - Public
+exports.forgotPassword = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+
+    if (!user) {
+      return next(new ErrorResponse('Sorry, No user found!', 404));
+    }
+
+    // get the reset token
+    const resetToken = user.generatePasswordToken();
+
+    await user.save({ validateBeforeSave: false });
+
+    // Send Email with the url
+    try {
+      const emailInfo = await sendEmail({
+        email: req.body.email,
+        subject: 'Resetting Your Password',
+        html: `
+		  <h2>Please click on given link to reset your password</h2>
+		  <p>${req.protocol}://${req.get(
+          'host'
+        )}/api/v1/auth/resetpassword/${resetToken}</p>
+		  `,
+      });
+
+      res.status(200).json({
+        success: true,
+        msg: 'A reset password link has been send to your email address',
+      });
+    } catch (err) {
+      console.log(err);
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+
+      await user.save({ validateBeforeSave: false });
+      return next(new ErrorResponse(`Email could not be send`, 500));
+    }
+
+    // Get a reset token
+  } catch (err) {
+    next(err);
+  }
+};
+
+// @desc - Reset Password
+// @route - POST api/v1/ auth/resetpassword/:resettoken
+// @access - Public
+exports.resetPassword = async (req, res, next) => {
+  try {
+    const resetPasswordToken = crypto
+      .createHash('sha256')
+      .update(req.params.resettoken)
+      .digest('hex');
+
+    // Finding/Checking for the user
+    const user = await User.findOne({
+      resetPasswordToken: resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return next(new ErrorResponse('Sorry, no user found!', 404));
+    }
+
+    // Setting the new password to password field
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save();
+
+    // Generate Token now
+    const token = user.generateToken();
+
+    // Generating a cookie
+    const options = {
+      expires: new Date(
+        Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+      ),
+      httpOnly: true,
+    };
+
+    if (process.env.NODE_ENV === 'production') {
+      options.secure = true;
+    }
+
+    res.status(200).cookie('token', token, options).json({
+      success: true,
+      token,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
