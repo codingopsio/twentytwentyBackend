@@ -4,7 +4,7 @@
 
 > This is going to be Extensive API's that we'll create from scratch. Please read them carefully.
 
-## Usage (Important)
+## Usage
 
 Before you start contributing, make a pull request to contributors.md file
 
