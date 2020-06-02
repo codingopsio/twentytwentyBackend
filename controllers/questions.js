@@ -7,6 +7,86 @@ const ErrorResponse = require('../utils/errorResponse');
 // @access - Private
 exports.getQuestions = async (req, res, next) => {
   try {
+    // Advanced Filtering
+    let queryString = { ...req.query };
+    let fields;
+
+    // For pagination, If **select** is present in the query, then deleting that
+    if (req.query.select) {
+      const selectFieldDelete = delete queryString.select;
+      fields = req.query.select.split(',').join(' ');
+    }
+
+    // For pagination, If **page** is present in the query, then deleting that
+    if (req.query.page) {
+      const pageFieldDelete = delete queryString.page;
+    }
+
+    // For pagination, If **limit** is present in the query, then deleting that
+    if (req.query.limit) {
+      const limitFieldDelete = delete queryString.limit;
+    }
+
+    // Filtering for category - eg: Fullstack, Frontend, Nodejs
+    let query = JSON.stringify(queryString);
+    query = query.replace('in', '$in');
+
+    //  Pagination Logic
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 5;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const total = await Question.countDocuments();
+
+    // For Previous & Next Page
+    let pagination = {
+      currentPage: page,
+    };
+
+    if (endIndex < total) {
+      pagination.nextPage = page + 1;
+    }
+
+    if (startIndex > page || startIndex === page) {
+      pagination.prevPage = page - 1;
+    }
+
+    query = await Question.find(JSON.parse(query))
+      .skip(startIndex)
+      .limit(limit)
+      .select(fields);
+
+    let questions = await query;
+
+    res.status(200).json({
+      success: true,
+      count: questions.length,
+      pagination,
+      data: questions,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// @desc - Get single question
+// @route - GET api/v1/ questions/:questionId
+// @access - Private
+exports.getQuestion = async (req, res, next) => {
+  try {
+    const question = await Question.findById(req.params.questionId).populate({
+      path: 'webinar',
+      select: 'title description',
+    });
+
+    if (!question) {
+      return next(new ErrorResponse('Sorry, no question found', 404));
+    }
+
+    res.status(200).json({
+      success: true,
+      data: question,
+    });
   } catch (err) {
     next(err);
   }
@@ -117,6 +197,35 @@ exports.updateQuestion = async (req, res, next) => {
     res.status(200).json({
       success: true,
       data: question,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// @desc - Delete question
+// @route - DELETE api/v1/ questions/:questionId
+// @access - Private
+exports.deleteQuestion = async (req, res, next) => {
+  try {
+    let question = await Question.findById(req.params.questionId);
+
+    if (!question) {
+      return next(new ErrorResponse('No question found with this ID', 404));
+    }
+
+    // Checking ownership of the review, i.e user can update his/her own review
+    if (question.user.toString() !== req.user.id) {
+      return next(
+        new ErrorResponse('Not authorized to delete this review', 400)
+      );
+    }
+
+    await question.remove();
+
+    res.status(200).json({
+      success: true,
+      data: {},
     });
   } catch (err) {
     next(err);
