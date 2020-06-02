@@ -18,6 +18,7 @@ connectDB();
 const webinars = require('./routes/webinars');
 const auth = require('./routes/auth');
 const users = require('./routes/users');
+const questions = require('./routes/questions');
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/v1/webinars', webinars);
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/users', users);
+app.use('/api/v1/questions', questions);
 
 app.use(errorHandler);
 

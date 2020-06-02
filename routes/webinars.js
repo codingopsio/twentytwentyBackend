@@ -10,7 +10,13 @@ const {
 
 const router = express.Router();
 
+// Include other routers
+const questionRouter = require('./questions');
+
 const { protect, authorize } = require('../middleware/auth');
+
+// Re-Route into other resource routers
+router.use('/:webinarId/questions', questionRouter);
 
 router
   .route('/')

@@ -27,8 +27,6 @@ exports.protect = async (req, res, next) => {
 
       req.user = await User.findById(decoded.id);
 
-      console.log(decoded);
-
       next();
     } catch (err) {
       return next(err);
