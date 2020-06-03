@@ -55,7 +55,8 @@ exports.getWebinars = async (req, res, next) => {
     query = await Webinar.find(JSON.parse(query))
       .skip(startIndex)
       .limit(limit)
-      .select(fields);
+      .select(fields)
+      .populate('questions');
 
     let webinars = await query;
 
@@ -148,7 +149,7 @@ exports.deleteWebinar = async (req, res, next) => {
       );
     }
 
-    await Webinar.findByIdAndDelete(req.params.id);
+    webinar.remove();
 
     res.status(200).json({
       success: true,

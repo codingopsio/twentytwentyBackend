@@ -21,11 +21,17 @@ const QuestionSchema = new mongoose.Schema({
       user: {
         type: mongoose.Schema.ObjectId,
         ref: 'User',
+        required: true,
+        autopopulate: { select: 'name' },
       },
       description: {
         type: String,
         required: [true, 'Please add a reply'],
         maxlength: 800,
+      },
+      photo: {
+        type: String,
+        default: 'no-photo.jpg',
       },
       date: {
         type: Date,
@@ -48,5 +54,7 @@ const QuestionSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+
+QuestionSchema.plugin(require('mongoose-autopopulate'));
 
 module.exports = mongoose.model('Question', QuestionSchema);
