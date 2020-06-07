@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const {
   createWebinar,
   getWebinars,
@@ -6,27 +6,29 @@ const {
   updateWebinar,
   deleteWebinar,
   uploadPhoto,
-} = require('../controllers/webinars');
+} = require("../controllers/webinars");
 
 const router = express.Router();
 
 // Include other routers
-const questionRouter = require('./questions');
+const questionRouter = require("./questions");
+const reviewRouter = require("./reviews");
 
-const { protect, authorize } = require('../middleware/auth');
+const { protect, authorize } = require("../middleware/auth");
 
 // Re-Route into other resource routers
-router.use('/:webinarId/questions', questionRouter);
+router.use("/:webinarId/questions", questionRouter);
+router.use("/:webinarId/reviews", reviewRouter);
 
 router
-  .route('/')
+  .route("/")
   .get(getWebinars)
-  .post(protect, authorize('admin'), createWebinar);
+  .post(protect, authorize("admin"), createWebinar);
 router
-  .route('/:id')
+  .route("/:id")
   .get(getWebinar)
-  .put(protect, authorize('admin'), updateWebinar)
-  .delete(protect, authorize('admin'), deleteWebinar);
-router.route('/:id/photo').post(protect, authorize('admin'), uploadPhoto);
+  .put(protect, authorize("admin"), updateWebinar)
+  .delete(protect, authorize("admin"), deleteWebinar);
+router.route("/:id/photo").post(protect, authorize("admin"), uploadPhoto);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const {
   createQuestion,
   updateQuestion,
@@ -7,20 +7,20 @@ const {
   deleteQuestion,
   replyQuestion,
   deleteReply,
-} = require('../controllers/questions');
+} = require("../controllers/questions");
 
 const router = express.Router({ mergeParams: true });
 
-const { protect, authorize } = require('../middleware/auth');
+const { protect, authorize } = require("../middleware/auth");
 
-router.route('/').post(protect, createQuestion).get(protect, getQuestions);
+router.route("/").post(protect, createQuestion).get(protect, getQuestions);
 router
-  .route('/:questionId')
+  .route("/:questionId")
   .post(protect, replyQuestion)
   .put(protect, updateQuestion)
   .get(protect, getQuestion)
   .delete(protect, deleteQuestion);
 
-router.route('/:questionId/:replyId').delete(protect, deleteReply);
+router.route("/:questionId/:replyId").delete(protect, deleteReply);
 
 module.exports = router;
