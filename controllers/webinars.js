@@ -28,6 +28,8 @@ exports.getWebinars = async (req, res, next) => {
       const limitFieldDelete = delete queryString.limit;
     }
 
+    console.log(queryString);
+
     // Filtering for category - eg: Fullstack, Frontend, Nodejs
     let query = JSON.stringify(queryString);
     query = query.replace('in', '$in');
