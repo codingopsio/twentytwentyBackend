@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "SET NODE_ENV=production & node server",
-    "dev": "nodemon server"
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,7 @@
   },
   "homepage": "https://github.com/codingopsio/twentytwentyBackend#readme",
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "nodemon": "^2.0.4"
   },
   "dependencies": {
