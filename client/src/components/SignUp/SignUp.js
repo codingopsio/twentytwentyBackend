@@ -10,55 +10,55 @@ const SignUp = () => {
 
   return (
     <>
-      <div class="container-auth">
-        <div class="img">
+      <div className="container-auth">
+        <div className="img">
           <img src={require('../../img/signup.svg')} alt="signup" />
         </div>
-        <div class="login-content">
+        <div className="login-content">
           <form action="index.html">
             <img src={require('../../img/avatar.svg')} alt="signin" />
-            <h2 class="title">Lets Connect</h2>
-            <div class="input-div one">
-              <div class="i">
-                <i class="fas fa-user"></i>
+            <h2 className="title">Lets Connect</h2>
+            <div className="input-div one">
+              <div className="i">
+                <i className="fas fa-user"></i>
               </div>
-              <div class="div">
+              <div className="div">
                 <h5>Username</h5>
-                <input type="text" class="input" />
+                <input type="text" className="input" />
               </div>
             </div>
 
-            <div class="input-div one">
-              <div class="i">
-                <i class="fas fa-user"></i>
+            <div className="input-div one">
+              <div className="i">
+                <i className="fas fa-user"></i>
               </div>
-              <div class="div">
+              <div className="div">
                 <h5>Email</h5>
-                <input type="text" class="input" />
+                <input type="text" className="input" />
               </div>
             </div>
 
-            <div class="input-div one">
-              <div class="i">
-                <i class="fas fa-user"></i>
+            <div className="input-div one">
+              <div className="i">
+                <i className="fas fa-user"></i>
               </div>
-              <div class="div">
+              <div className="div">
                 <h5>Password</h5>
-                <input type="password" class="input" />
+                <input type="password" className="input" />
               </div>
             </div>
 
-            <div class="input-div pass">
-              <div class="i">
-                <i class="fas fa-lock"></i>
+            <div className="input-div pass">
+              <div className="i">
+                <i className="fas fa-lock"></i>
               </div>
-              <div class="div">
+              <div className="div">
                 <h5>Confirm Password</h5>
-                <input type="password" class="input" />
+                <input type="password" className="input" />
               </div>
             </div>
             <Link to="/signin">Signin here</Link>
-            <input type="submit" class="btn" value="Signup" />
+            <input type="submit" className="btn" value="Signup" />
           </form>
         </div>
       </div>

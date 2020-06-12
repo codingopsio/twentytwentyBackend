@@ -9,35 +9,35 @@ const SignIn = () => {
 
   return (
     <>
-      <div class="container-auth">
-        <div class="img">
-          <img src={require('../../img/save.svg')} />
+      <div className="container-auth">
+        <div className="img">
+          <img src={require('../../img/save.svg')} alt="save" />
         </div>
-        <div class="login-content">
+        <div className="login-content">
           <form action="index.html">
-            <img src={require('../../img/avatar.svg')} />
-            <h2 class="title">Welcome Back</h2>
-            <div class="input-div one">
-              <div class="i">
-                <i class="fas fa-user"></i>
+            <img src={require('../../img/avatar.svg')} alt="avatar" />
+            <h2 className="title">Welcome Back</h2>
+            <div className="input-div one">
+              <div className="i">
+                <i className="fas fa-user"></i>
               </div>
-              <div class="div">
+              <div className="div">
                 <h5>Username</h5>
-                <input type="text" class="input" />
+                <input type="text" className="input" />
               </div>
             </div>
-            <div class="input-div pass">
-              <div class="i">
-                <i class="fas fa-lock"></i>
+            <div className="input-div pass">
+              <div className="i">
+                <i className="fas fa-lock"></i>
               </div>
-              <div class="div">
+              <div className="div">
                 <h5>Password</h5>
-                <input type="password" class="input" />
+                <input type="password" className="input" />
               </div>
             </div>
             <Link to="/signup">Signup here </Link>
             <a> Forgot Password?</a>
-            <input type="submit" class="btn" value="Login" />
+            <input type="submit" className="btn" value="Login" />
           </form>
         </div>
       </div>

@@ -6,15 +6,15 @@ const Header = () => {
   return (
     <React.Fragment>
       <div className="container">
-        <nav class="main-nav">
+        <nav className="main-nav">
           <Link to="/">
             <img
               src={require('../../img/logo-bookmark.svg')}
               alt="page-logo"
-              class="logo"
+              className="logo"
             />
           </Link>
-          <ul class="nav-links">
+          <ul className="nav-links">
             <li>
               <a href="#">Workshops</a>
             </li>
@@ -24,7 +24,7 @@ const Header = () => {
             <li>
               <Link to="/signin">Login</Link>
             </li>
-            <Link to="/signup" class="btn-red">
+            <Link to="/signup" className="btn-red">
               Register
             </Link>
           </ul>
