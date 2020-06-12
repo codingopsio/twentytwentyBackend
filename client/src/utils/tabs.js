@@ -1,4 +1,4 @@
-export const appendScript = () => {
+export const switchTabs = () => {
   // For Switching tabs for Feature section
   const tabs = document.querySelectorAll('.tab');
   const features = document.querySelectorAll('.features-content');

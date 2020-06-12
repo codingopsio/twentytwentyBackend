@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { appendScript } from './../../utils';
+import { Link } from 'react-router-dom';
+import { switchTabs } from '../../utils/tabs';
 import './Homepage.css';
 
 const Homepage = () => {
   useEffect(() => {
-    appendScript();
+    switchTabs();
   }, []);
 
   return (
@@ -250,9 +251,9 @@ const Homepage = () => {
             />
           </div>
 
-          <a href="/#" className="btn-blue start-now">
+          <Link to="/signup" className="btn-blue start-now">
             Try It Now
-          </a>
+          </Link>
         </div>
       </section>
 
