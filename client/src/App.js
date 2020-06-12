@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import Homepage from './pages/Homepage/Homepage';
 import './App.css';
 
-const App = () => {
-  return (
-    <div className="App">
-      <h1>App</h1>
-    </div>
-  );
-};
+const App = () => (
+  <Fragment>
+    <Homepage />
+  </Fragment>
+);
 
 export default App;

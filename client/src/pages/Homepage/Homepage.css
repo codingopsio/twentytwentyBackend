@@ -1,0 +1,247 @@
+/* Header */
+.main-header {
+	position: relative;
+	height: 90vh;
+	margin-bottom: 20px;
+}
+
+.main-header .heading-content {
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.main-header .heading-content::after {
+	content: "";
+	position: absolute;
+	width: 32%;
+	height: 280px;
+	background-color: var(--Soft-Blue);
+	border-radius: 130px 0 0 130px;
+	right: 0;
+	bottom: 100px;
+	z-index: -1;
+}
+
+.main-header .heading-content div:nth-child(2) img {
+	width: 800px;
+	height: 600px;
+}
+
+
+
+
+/* Features Section */
+.main-features {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	margin-bottom: 110px;
+}
+
+.main-features::before {
+	content: "";
+	position: absolute;
+	width: 32%;
+	height: 270px;
+	background-color: var(--Soft-Blue);
+	border-radius: 0 120px 120px 0;
+	left: 0;
+	bottom: 0;
+	z-index: -1;
+}
+
+.main-features .features-heading {
+	width: 38%;
+	text-align: center;
+	margin: auto;
+	margin-bottom: 60px;
+}
+
+.main-features .features-tabs {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 70px;
+}
+
+.main-features .features-tabs .tab {
+	padding: 2rem;
+	letter-spacing: 1.1px;
+	font-size: 19px;
+	border-bottom: 1px solid #ccc;
+	cursor: pointer;
+}
+
+.main-features .features-tabs .show-tab {
+	border-bottom: 4px solid var(--Soft-Red);
+}
+
+
+
+
+.main-features .features-content-1,
+.main-features .features-content-2,
+.main-features .features-content-3 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: start;
+}
+
+.main-features .features-content {
+	display: none;
+}
+
+
+.main-features .show-content {
+	display: block;
+}
+
+
+
+
+.main-features .features-content-1 div:nth-child(1) img,
+.main-features .features-content-2 div:nth-child(1) img,
+.main-features .features-content-3 div:nth-child(1) img {
+	width: 590px;
+	height: 420px;
+}
+
+.main-features .features-content-1 div:nth-child(1),
+.main-features .features-content-2 div:nth-child(1),
+.main-features .features-content-3 div:nth-child(1) {
+	margin-right: 110px;
+}
+
+
+.main-features .features-content-1 div:nth-child(2),
+.main-features .features-content-2 div:nth-child(2),
+.main-features .features-content-3 div:nth-child(2) {
+	width: 50%;
+	padding: 0 8rem 0 0;
+}
+
+
+
+
+
+
+/* Services section */
+.main-services {
+	height: 100%;
+	width: 100%;
+	margin-bottom: 90px;
+}
+
+.main-services .services-heading {
+	width: 40%;
+	margin: auto;
+	text-align: center;
+	margin-bottom: 70px;
+}
+
+.main-services .service-content {
+	width: 80%;
+	margin: auto;
+}
+
+
+.main-services .service-content .parent-card {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 2rem;
+}
+
+.main-services .service-content .parent-card .card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	border: 1px solid #eeeeee;
+	box-shadow: 0px 0px 17px 0px #e2e2e2;
+	padding: 2.2rem;
+}
+
+.main-services .service-content .parent-card .card small {
+	font-size: 15px;
+	color: var(--Grayish-Blue);
+	margin-bottom: 40px;
+}
+
+
+
+
+
+
+/* FAQ Section */
+.main-faq {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	margin-bottom: 100px;
+}
+
+.main-faq .faq-heading {
+	width: 40%;
+	margin: auto;
+	text-align: center;
+	margin-bottom: 50px;
+}
+
+
+.main-faq .faq-content {
+	width: 80%;
+	margin: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 40px;
+}
+
+.main-faq .faq-content .faq-logo {
+	display: inline-block;
+	width: 560px;
+}
+
+.main-faq .start-now {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
+}
+
+
+
+
+/* Subscribtion Section */
+.main-subscribtion {
+	width: 100%;
+	height: 100%;
+	background-color: #6b6bf0;
+	padding: 3.8rem 0;
+}
+
+.main-subscribtion .subscribtion-content {
+	width: 50%;
+	margin: auto;
+	text-align: center;
+}
+
+
+.main-subscribtion .subscribtion-content small {
+	font-size: 16px;
+	color: white;
+	letter-spacing: 1.2px;
+}
+
+.main-subscribtion .subscribtion-content .subscribtion-heading {
+	font-size: 1.7rem;
+	color: white;
+	margin-bottom: 50px;
+}
+
+.subscribe-form input[type=submit]:hover {
+	background-color: white;
+}
