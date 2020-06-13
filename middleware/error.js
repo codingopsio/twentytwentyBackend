@@ -1,16 +1,17 @@
-const ErrorResponse = require('../utils/errorResponse');
+const ErrorResponse = require("../utils/errorResponse");
 
 const errorHandler = (err, req, res, next) => {
   let error = { ...err };
-  console.log(err);
+
 
   error.message = err.message;
+  console.log(err.message);
 
   let message;
 
   // Mongoose Validation error
-  if (err.name === 'ValidationError') {
-    message = `Webinar Validation failed`;
+  if (err.name === "ValidationError") {
+    message = err.message;
     error = new ErrorResponse(message, 404);
   }
 
@@ -21,14 +22,14 @@ const errorHandler = (err, req, res, next) => {
   }
 
   // Mongoose bad ObjectId error
-  if (err.name === 'CastError') {
+  if (err.name === "CastError") {
     message = `Resource not found with id of id ${err.value}`;
     error = new ErrorResponse(message, 404);
   }
 
   res.status(error.statusCode || 500).json({
     success: false,
-    error: error.message || 'Server Error',
+    error: error.message || "Server Error",
   });
 };
 
