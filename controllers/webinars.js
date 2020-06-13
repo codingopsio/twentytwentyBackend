@@ -1,5 +1,5 @@
-const ErrorResponse = require('../utils/errorResponse');
-const Webinar = require('../models/Webinar');
+const ErrorResponse = require("../utils/errorResponse");
+const Webinar = require("../models/Webinar");
 
 // @desc - Get all webinars
 // @route - GET api/v1/ webinars
@@ -15,7 +15,7 @@ exports.getWebinars = async (req, res, next) => {
     // For pagination, If **select** is present in the query, then deleting that
     if (req.query.select) {
       const selectFieldDelete = delete queryString.select;
-      fields = req.query.select.split(',').join(' ');
+      fields = req.query.select.split(",").join(" ");
     }
 
     // For pagination, If **page** is present in the query, then deleting that
@@ -30,7 +30,7 @@ exports.getWebinars = async (req, res, next) => {
 
     // Filtering for category - eg: Fullstack, Frontend, Nodejs
     let query = JSON.stringify(queryString);
-    query = query.replace('in', '$in');
+    query = query.replace("in", "$in");
 
     //  Pagination Logic
     const page = parseInt(req.query.page, 10) || 1;
@@ -55,8 +55,7 @@ exports.getWebinars = async (req, res, next) => {
     query = await Webinar.find(JSON.parse(query))
       .skip(startIndex)
       .limit(limit)
-      .select(fields)
-      .populate('questions');
+      .select(fields);
 
     let webinars = await query;
 
@@ -76,7 +75,9 @@ exports.getWebinars = async (req, res, next) => {
 // @access - Public
 exports.getWebinar = async (req, res, next) => {
   try {
-    const webinar = await Webinar.findById(req.params.id);
+    const webinar = await Webinar.findById(req.params.id)
+      .populate("questions")
+      .populate("reviews");
 
     if (!webinar) {
       return next(
@@ -178,7 +179,7 @@ exports.uploadPhoto = async (req, res, next) => {
 
     const file = req.files.file;
 
-    if (!file.mimetype.startsWith('image')) {
+    if (!file.mimetype.startsWith("image")) {
       return next(
         new ErrorResponse(`Error in uploading file ${file.name}`, 400)
       );

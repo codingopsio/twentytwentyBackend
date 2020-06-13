@@ -1,21 +1,17 @@
 const mongoose = require("mongoose");
 
 const ReviewSchema = new mongoose.Schema({
-  title: {
+  description: {
     type: String,
-    trim: true,
-    required: [true, "Please add a title for the review"],
-    maxlength: 100,
-  },
-  text: {
-    type: String,
-    required: [true, "Please add some text"],
+    min: 5,
+    max: 200,
+    required: [true, "Please add some description"],
   },
   rating: {
     type: Number,
     min: 1,
-    max: 10,
-    required: [true, "Please add a rating between 1 and 10"],
+    max: 5,
+    required: [true, "Please add a rating between 1 and 5"],
   },
   createdAt: {
     type: Date,
