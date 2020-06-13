@@ -95,7 +95,12 @@ exports.loginUser = async (req, res, next) => {
 
     // Error message if user not present
     if (!user) {
-      return next(new ErrorResponse(`No User found`, 401));
+      return next(
+        new ErrorResponse(
+          `No User found, please provide valid credentials`,
+          401
+        )
+      );
     }
 
     // Checking for password

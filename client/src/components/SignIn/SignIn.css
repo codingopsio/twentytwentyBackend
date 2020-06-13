@@ -162,3 +162,13 @@ a:hover {
 .btn:hover {
 	background-position: right;
 }
+
+
+.reserror {
+	color: red;
+	font-weight: bold;
+	display: block;
+	width: 300px;
+	margin: auto;
+	padding: 0.8rem;
+}

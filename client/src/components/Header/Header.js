@@ -16,10 +16,10 @@ const Header = () => {
           </Link>
           <ul className="nav-links">
             <li>
-              <a href="#">Workshops</a>
+              <a href="/#">Workshops</a>
             </li>
             <li>
-              <a href="#">Community</a>
+              <a href="/#">Community</a>
             </li>
             <li>
               <Link to="/signin">Login</Link>
