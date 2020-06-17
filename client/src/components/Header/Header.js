@@ -1,17 +1,18 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Header.css';
-import { connect } from 'react-redux';
-import { PropTypes } from 'prop-types';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Header.css";
+import { connect } from "react-redux";
+import { PropTypes } from "prop-types";
+import { logout } from "../../actions/auth";
 
-const Header = ({ isAuthenticated }) => {
+const Header = ({ isAuthenticated, logout }) => {
   return (
     <React.Fragment>
       <div className="container">
         <nav className="main-nav">
           <Link to="/">
             <img
-              src={require('../../img/logo-bookmark.svg')}
+              src={require("../../img/logo-bookmark.svg")}
               alt="page-logo"
               className="logo"
             />
@@ -25,9 +26,12 @@ const Header = ({ isAuthenticated }) => {
             </li>
 
             {isAuthenticated ? (
-              <Link to="/logout" className="btn-red">
-                Logout
-              </Link>
+              <input
+                type="submit"
+                className="btn-red"
+                value="Logout"
+                onClick={() => logout()}
+              />
             ) : (
               <>
                 <li>
@@ -55,4 +59,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => dispatch(logout()),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

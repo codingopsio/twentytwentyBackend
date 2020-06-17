@@ -5,14 +5,14 @@ import {
   LOGIN_FAILURE,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
-} from './types';
-import axios from 'axios';
+} from "./types";
+import axios from "axios";
 
 // For Loading the user
 export const getLoggedInUser = () => async (dispatch) => {
   try {
     if (localStorage.token) {
-      const response = await axios.get('/api/v1/auth/me', {
+      const response = await axios.get("/api/v1/auth/me", {
         headers: {
           Authorization: `Bearer ${localStorage.token}`,
         },
@@ -52,14 +52,14 @@ export const register = (id) => async (dispatch) => {
 export const login = (email, password) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
 
   const body = JSON.stringify({ email, password });
 
   try {
-    let response = await axios.post('/api/v1/auth/login', body, config);
+    let response = await axios.post("/api/v1/auth/login", body, config);
     console.log(response.data);
     dispatch({
       type: LOGIN_SUCCESS,
@@ -72,4 +72,11 @@ export const login = (email, password) => async (dispatch) => {
       type: LOGIN_FAILURE,
     });
   }
+};
+
+// logout user
+export const logout = () => (dispatch) => {
+  dispatch({
+    type: LOGIN_FAILURE,
+  });
 };
