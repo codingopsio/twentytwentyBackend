@@ -1,35 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { SignUpAnimation } from "./../../utils/SignUp";
-import "./SignUp.css";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { SignUpAnimation } from './../../utils/SignUp';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './SignUp.css';
+import axios from 'axios';
 
-const SignUp = () => {
+const SignUp = (props) => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
-  const [responseError, setResponseError] = useState("");
+  const [responseError, setResponseError] = useState('');
 
   useEffect(() => {
     SignUpAnimation();
   }, []);
 
-  const onSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setResponseError('');
     try {
       if (formData.password === formData.confirmPassword) {
-        let response = await axios.post("/api/v1/auth/register", formData);
-        console.log(response.data);
+        await axios.post('/api/v1/auth/register', formData);
       } else {
-        setResponseError("Incorrect match, please check your password");
-        console.log(responseError);
+        setResponseError('Incorrect match, please check your password');
       }
     } catch (error) {
       setResponseError(error.response.data.error);
-      console.log(responseError);
     }
   };
 
@@ -37,15 +37,27 @@ const SignUp = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const onShowToast = () => {
+    toast.success(`🦄 Email has been sent to ${formData.email}`, {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   return (
     <>
       <div className="container-auth">
         <div className="img">
-          <img src={require("../../img/signup.svg")} alt="signup" />
+          <img src={require('../../img/signup.svg')} alt="signup" />
         </div>
         <div className="login-content">
-          <form onSubmit={(e) => onSubmit(e)}>
-            <img src={require("../../img/avatar.svg")} alt="signin" />
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <img src={require('../../img/avatar.svg')} alt="signin" />
             <h2 className="title">Lets Connect</h2>
             <div className="input-div one">
               <div className="i">
@@ -59,7 +71,6 @@ const SignUp = () => {
                   name="name"
                   value={formData.name}
                   onChange={(e) => onChange(e)}
-                  required
                 />
               </div>
             </div>
@@ -76,7 +87,6 @@ const SignUp = () => {
                   name="email"
                   value={formData.email}
                   onChange={(e) => onChange(e)}
-                  required
                 />
               </div>
             </div>
@@ -93,7 +103,6 @@ const SignUp = () => {
                   name="password"
                   value={formData.password}
                   onChange={(e) => onChange(e)}
-                  required
                 />
               </div>
             </div>
@@ -110,7 +119,6 @@ const SignUp = () => {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={(e) => onChange(e)}
-                  required
                 />
               </div>
             </div>
@@ -118,7 +126,13 @@ const SignUp = () => {
             {responseError ? (
               <span className="reserror">{responseError}</span>
             ) : null}
-            <input type="submit" className="btn" value="Signup" />
+            <input
+              type="submit"
+              className="btn"
+              value="Signup"
+              onClick={onShowToast}
+            />
+            {responseError ? null : <ToastContainer />}
           </form>
         </div>
       </div>

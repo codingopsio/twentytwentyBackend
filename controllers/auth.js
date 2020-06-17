@@ -1,8 +1,8 @@
-const crypto = require("crypto");
-const User = require("../models/User");
-const ErrorResponse = require("../utils/errorResponse");
-const jwt = require("jsonwebtoken");
-const sendEmail = require("../utils/sendemail");
+const crypto = require('crypto');
+const User = require('../models/User');
+const ErrorResponse = require('../utils/errorResponse');
+const jwt = require('jsonwebtoken');
+const sendEmail = require('../utils/sendemail');
 
 // @desc - Registering User
 // @route - POST api/v1/ auth/register
@@ -10,6 +10,30 @@ const sendEmail = require("../utils/sendemail");
 exports.registerUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
+
+    if (name.length === 0 || email.length === 0) {
+      return next(new ErrorResponse('Please enter valid credentials', 400));
+    }
+
+    if (password.length < 6) {
+      return next(
+        new ErrorResponse('Password must be of atleast 6 characters', 400)
+      );
+    }
+
+    const user = await User.findOne({
+      email,
+    });
+
+    if (user) {
+      return next(new ErrorResponse('This email already exist', 400));
+    }
+
+    // Creating Client request url
+    const CLIENT_ORIGIN =
+      process.env.NODE_ENV === 'production'
+        ? process.env.CLIENT_ORIGIN
+        : 'http://localhost:3000';
 
     // Creating a token
     const token = jwt.sign({ name, email, password }, process.env.JWT_SECRET, {
@@ -20,13 +44,12 @@ exports.registerUser = async (req, res, next) => {
     try {
       const emailInfo = await sendEmail({
         email: email,
-        subject:
-          "Please copy the token below and paste it to confirm Email verification",
+        subject: 'Account Verification Email',
         html: `
-		<h2>Please click on given link to activate your account</h2>
-		<p>${req.protocol}://${req.get(
-          "host"
-        )}/api/v1/auth/accountverification/${token}</p>
+		<h2>Click the link below to activate your account</h2>
+		<a href="${CLIENT_ORIGIN}/api/v1/auth/accountverification/${token}">
+			Click to activate your account 
+		</a>
 		`,
       });
     } catch (err) {
@@ -36,7 +59,7 @@ exports.registerUser = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      data: "Email sent",
+      data: 'Email sent',
     });
   } catch (err) {
     next(err);
@@ -48,7 +71,7 @@ exports.registerUser = async (req, res, next) => {
 // @access - Public
 exports.emailVerification = async (req, res, next) => {
   try {
-    const token = req.params.id;
+    let token = req.params.id;
 
     if (token) {
       try {
@@ -61,16 +84,32 @@ exports.emailVerification = async (req, res, next) => {
           password: decoded.password,
         });
 
-        res.status(200).json({
+        // Generate Token now
+        token = user.generateToken();
+
+        // Generating a cookie
+        const options = {
+          expires: new Date(
+            Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+          ),
+          httpOnly: true,
+        };
+
+        if (process.env.NODE_ENV === 'production') {
+          options.secure = true;
+        }
+
+        res.status(200).cookie('token', token, options).json({
           success: true,
-          msg: "Email verification confirmed! Your account has been created.",
+          msg: 'Email verification confirmed! Your account has been created.',
+          token,
         });
       } catch (err) {
         return next(err);
       }
     } else {
       return next(
-        new ErrorResponse("Something went wrong with account verification", 500)
+        new ErrorResponse('Something went wrong with account verification', 500)
       );
     }
   } catch (err) {
@@ -91,7 +130,7 @@ exports.loginUser = async (req, res, next) => {
     }
 
     // Check for the user
-    const user = await User.findOne({ email: email }).select("+password");
+    const user = await User.findOne({ email: email }).select('+password');
 
     // Error message if user not present
     if (!user) {
@@ -107,7 +146,7 @@ exports.loginUser = async (req, res, next) => {
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
-      return next(new ErrorResponse("Incorrect Password", 400));
+      return next(new ErrorResponse('Incorrect Password', 400));
     }
 
     // Generate Token now
@@ -121,11 +160,11 @@ exports.loginUser = async (req, res, next) => {
       httpOnly: true,
     };
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === 'production') {
       options.secure = true;
     }
 
-    res.status(200).cookie("token", token, options).json({
+    res.status(200).cookie('token', token, options).json({
       success: true,
       token,
     });
@@ -183,7 +222,7 @@ exports.updateDetails = async (req, res, next) => {
 // @access - Private
 exports.updatePassword = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id).select("+password");
+    const user = await User.findById(req.user.id).select('+password');
 
     const currentPassword = req.body.currentPassword;
     const newPassword = req.body.newPassword;
@@ -206,11 +245,11 @@ exports.updatePassword = async (req, res, next) => {
       httpOnly: true,
     };
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === 'production') {
       options.secure = true;
     }
 
-    res.status(200).cookie("token", token, options).json({
+    res.status(200).cookie('token', token, options).json({
       success: true,
       token,
     });
@@ -227,7 +266,7 @@ exports.forgotPassword = async (req, res, next) => {
     const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
-      return next(new ErrorResponse("Sorry, No user found!", 404));
+      return next(new ErrorResponse('Sorry, No user found!', 404));
     }
 
     // get the reset token
@@ -239,18 +278,18 @@ exports.forgotPassword = async (req, res, next) => {
     try {
       const emailInfo = await sendEmail({
         email: req.body.email,
-        subject: "Resetting Your Password",
+        subject: 'Resetting Your Password',
         html: `
 		  <h2>Please click on given link to reset your password</h2>
 		  <p>${req.protocol}://${req.get(
-          "host"
+          'host'
         )}/api/v1/auth/resetpassword/${resetToken}</p>
 		  `,
       });
 
       res.status(200).json({
         success: true,
-        msg: "A reset password link has been send to your email address",
+        msg: 'A reset password link has been send to your email address',
       });
     } catch (err) {
       console.log(err);
@@ -273,9 +312,9 @@ exports.forgotPassword = async (req, res, next) => {
 exports.resetPassword = async (req, res, next) => {
   try {
     const resetPasswordToken = crypto
-      .createHash("sha256")
+      .createHash('sha256')
       .update(req.params.resettoken)
-      .digest("hex");
+      .digest('hex');
 
     // Finding/Checking for the user
     const user = await User.findOne({
@@ -284,7 +323,7 @@ exports.resetPassword = async (req, res, next) => {
     });
 
     if (!user) {
-      return next(new ErrorResponse("Sorry, no user found!", 404));
+      return next(new ErrorResponse('Sorry, no user found!', 404));
     }
 
     // Setting the new password to password field
@@ -305,11 +344,11 @@ exports.resetPassword = async (req, res, next) => {
       httpOnly: true,
     };
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === 'production') {
       options.secure = true;
     }
 
-    res.status(200).cookie("token", token, options).json({
+    res.status(200).cookie('token', token, options).json({
       success: true,
       token,
     });

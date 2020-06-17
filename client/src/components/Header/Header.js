@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
+import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 
-const Header = () => {
+const Header = ({ isAuthenticated }) => {
   return (
     <React.Fragment>
       <div className="container">
@@ -21,12 +23,21 @@ const Header = () => {
             <li>
               <a href="/#">Community</a>
             </li>
-            <li>
-              <Link to="/signin">Login</Link>
-            </li>
-            <Link to="/signup" className="btn-red">
-              Register
-            </Link>
+
+            {isAuthenticated ? (
+              <Link to="/logout" className="btn-red">
+                Logout
+              </Link>
+            ) : (
+              <>
+                <li>
+                  <Link to="/signin">Login</Link>
+                </li>
+                <Link to="/signup" className="btn-red">
+                  Register
+                </Link>
+              </>
+            )}
           </ul>
         </nav>
       </div>
@@ -34,4 +45,14 @@ const Header = () => {
   );
 };
 
-export default Header;
+Header.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+  };
+};
+
+export default connect(mapStateToProps, null)(Header);

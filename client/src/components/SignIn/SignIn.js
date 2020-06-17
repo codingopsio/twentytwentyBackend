@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { SignUpAnimation } from './../../utils/SignUp';
+import { login } from '../../actions/auth';
 import './SignIn.css';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const SignIn = () => {
+const SignIn = ({ isAuthenticated, login }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -17,20 +19,23 @@ const SignIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('/api/v1/auth/login', formData);
-      console.log(response);
 
-      setFormData({
-        email: '',
-        password: '',
-      });
-    } catch (err) {
-      setResponseError(err.response.data.error);
-      console.log(responseError);
+    if (formData.password.length < 6) {
+      setResponseError('Password must be of atleast 6 characters');
+    }
+
+    login(formData.email, formData.password);
+
+    if (!isAuthenticated) {
+      setResponseError('User not found, please provide valid credentials');
+    } else {
+      setResponseError('');
     }
   };
 
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -90,4 +95,21 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+SignIn.protoTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (email, password) => dispatch(login(email, password)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
