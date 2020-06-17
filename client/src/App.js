@@ -4,6 +4,7 @@ import Homepage from './pages/Homepage/Homepage';
 import SignIn from './components/SignIn/SignIn';
 import SignUp from './components/SignUp/SignUp';
 import Header from './components/Header/Header';
+import Dashboard from './pages/Dashboard/Dashboard';
 import AccountVerify from './components/AccountVerify/AccountVerify';
 import { getLoggedInUser } from './actions/auth';
 
@@ -11,6 +12,7 @@ import './App.css';
 // Redux
 import { Provider } from 'react-redux';
 import store from './store';
+import PrivateRoute from './routes/PrivateRoute';
 
 const App = () => {
   useEffect(() => {
@@ -31,6 +33,7 @@ const App = () => {
               path="/api/v1/auth/accountverification/:id"
               component={AccountVerify}
             />
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </Switch>
         </Fragment>
       </Router>
