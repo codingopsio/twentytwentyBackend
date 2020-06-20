@@ -1,14 +1,47 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getAllWebinars } from './../../actions/course';
+import './Dashboard.css';
+import CoursePreview from '../../components/CoursePreview/CoursePreview';
 
-const Dashboard = () => {
+const Dashboard = ({ auth, getAllWebinars, courses }) => {
+  useEffect(() => {
+    getAllWebinars();
+  }, []);
+
   return (
-    <div>
-      <p>Hello, this is dashboard page</p>
-    </div>
+    <>
+      {auth.user === null ? (
+        <img
+          className="spinner"
+          src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"
+          alt="spinner"
+        />
+      ) : (
+        <section className="welcome">
+          <div className="container">
+            <p className="welcome-text">Hi, {auth.user.name}</p>
+            <p className="welcome-text">Welcome to our website!</p>
+          </div>
+        </section>
+      )}
+
+      <CoursePreview />
+    </>
   );
 };
 
-Dashboard.propTypes = {};
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+    courses: state.course.courses,
+  };
+};
 
-export default Dashboard;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getAllWebinars: () => dispatch(getAllWebinars()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

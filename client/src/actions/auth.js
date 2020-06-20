@@ -5,6 +5,7 @@ import {
   LOGIN_FAILURE,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
+  FREE_COURSE_LOAD_FAILURE,
 } from './types';
 import axios from 'axios';
 
@@ -60,7 +61,6 @@ export const login = (email, password) => async (dispatch) => {
 
   try {
     let response = await axios.post('/api/v1/auth/login', body, config);
-    console.log(response.data);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: response.data,
@@ -78,5 +78,9 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   dispatch({
     type: LOGIN_FAILURE,
+  });
+
+  dispatch({
+    type: FREE_COURSE_LOAD_FAILURE,
   });
 };

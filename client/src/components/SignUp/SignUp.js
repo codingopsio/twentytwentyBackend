@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { SignUpAnimation } from './../../utils/SignUp';
+import { PropTypes } from 'prop-types';
+import axios from 'axios';
+import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './SignUp.css';
-import axios from 'axios';
 
-const SignUp = (props) => {
+const SignUp = ({ isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,6 +34,10 @@ const SignUp = (props) => {
       setResponseError(error.response.data.error);
     }
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -140,4 +146,14 @@ const SignUp = (props) => {
   );
 };
 
-export default SignUp;
+SignUp.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+  };
+};
+
+export default connect(mapStateToProps)(SignUp);
