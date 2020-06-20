@@ -1,0 +1,201 @@
+/* Courses list page */
+.courselist-container {
+	max-width: 1100px;
+	margin: auto;
+	overflow: hidden;
+	padding: 1.5rem;
+	height: 100%;
+}
+
+
+.filters {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 2.2rem 0;
+	margin-bottom: 2rem;
+}
+
+
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	appearance: none;
+	outline: 0;
+	box-shadow: none;
+	border: 0 !important;
+	background: #c0d9f1;
+	background-image: none;
+	font-size: 18px;
+	box-sizing: content-box;
+	height: 30px;
+	max-height: 30px;
+}
+
+
+
+/* Remove IE arrow */
+select::-ms-expand {
+	display: none;
+}
+
+/* Custom Select */
+.select {
+	position: relative;
+	display: flex;
+	width: 20em;
+	height: 3em;
+	line-height: 3;
+	background: #2c3e50;
+	overflow: hidden;
+	border-radius: .25em;
+}
+
+select {
+	flex: 1;
+	padding: 0.5em;
+	color: #000;
+	cursor: pointer;
+	letter-spacing: 1.2px;
+	font-weight: 500;
+}
+
+/* Arrow */
+.select::after {
+	content: '\25BC';
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 0 1em;
+	background: #6c86a0;
+	cursor: pointer;
+	pointer-events: none;
+	-webkit-transition: .25s all ease;
+	-o-transition: .25s all ease;
+	transition: .25s all ease;
+}
+
+/* Transition */
+.select:hover::after {
+	color: #f39c12;
+}
+
+
+/* Search input design */
+.filters input[type=text] {
+	padding: 8px;
+	margin-top: 8px;
+	font-size: 17px;
+	border: 1px solid #c7c4c4;
+}
+
+
+.filters .search button {
+	float: right;
+	padding: 9px 10px;
+	margin-top: 8px;
+	margin-right: 16px;
+	background: #ddd;
+	font-size: 17px;
+	border: none;
+	cursor: pointer;
+}
+
+.filters .search button:hover {
+	background: #ccc;
+}
+
+
+
+/* Courseslist cards */
+.courselist-container .courses-list {
+	margin-bottom: 2rem;
+	background-color: white;
+	height: 100%;
+}
+
+
+.courses-list .courses-list-cards {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 35px;
+}
+
+.courses-list .courses-list-cards .card {
+	border: 2px solid #e7e7e7;
+	border-radius: 10px;
+	height: 350px;
+	margin-bottom: 35px;
+	position: relative;
+}
+
+.courses-list .courses-list-cards .card:hover {
+	border: 2px solid #e5be9b;
+	cursor: pointer;
+	transition: all 0.2s ease-out;
+}
+
+.courses-list .courses-list-cards .card img {
+	width: 100%;
+	border-radius: 10px 10px 0 0;
+	height: 180px;
+	margin-bottom: 0.5rem;
+}
+
+.courses-list .courses-list-cards .card small {
+	font-size: 1.25rem;
+	font-weight: 500;
+	display: block;
+	margin-bottom: 10px;
+	padding: 10px 10px 0 10px;
+	color: #e97b21;
+}
+
+.courses-list .courses-list-cards .card span {
+	color: #9e9d9d;
+	font-size: 12.6px;
+	letter-spacing: 1px;
+	padding: 10px 10px 0 10px;
+	display: block;
+}
+
+.courses-list .courses-list-cards .card p {
+	font-size: 16px;
+	text-transform: uppercase;
+	letter-spacing: 1.4px;
+	padding: 10px 10px 0 10px;
+	margin-top: 5px;
+	color: #e97b21;
+}
+
+
+.easy-tag,
+.medium-tag,
+.hard-tag {
+	position: absolute;
+	padding: 5px 8px;
+	border-radius: 8px;
+	top: 10px;
+	right: 10px;
+	text-align: center;
+	font-size: 11.8px;
+	font-weight: bold;
+	letter-spacing: 1.5px;
+	text-transform: uppercase;
+}
+
+.easy-tag {
+	background-color: #15d642;
+	color: white;
+}
+
+.medium-tag {
+	background-color: #677bfa;
+	color: white;
+}
+
+.hard-tag {
+	background-color: #f14d68;
+	color: white;
+}

@@ -1,0 +1,75 @@
+.courses .courses-cards .card {
+	border: 2px solid #e7e7e7;
+	border-radius: 9px;
+	height: 350px;
+	position: relative;
+}
+
+.courses .courses-cards .card:hover {
+	border: 2px solid #e5be9b;
+	cursor: pointer;
+	transition: all 0.2s ease-out;
+}
+
+.courses .courses-cards .card img {
+	width: 100%;
+	height: 180px;
+	margin-bottom: 0.5rem;
+}
+
+.courses .courses-cards .card small {
+	font-size: 1.25rem;
+	font-weight: 500;
+	display: block;
+	margin-bottom: 10px;
+	padding: 10px 10px 0 10px;
+	color: #e97b21;
+}
+
+.courses .courses-cards .card span {
+	color: #9e9d9d;
+	font-size: 12.6px;
+	letter-spacing: 1px;
+	padding: 10px 10px 0 10px;
+	display: block;
+}
+
+.courses .courses-cards .card p {
+	font-size: 16px;
+	text-transform: uppercase;
+	letter-spacing: 1.4px;
+	padding: 10px 10px 0 10px;
+	margin-top: 5px;
+	color: #e97b21;
+}
+
+
+.easy-tag,
+.medium-tag,
+.hard-tag {
+	position: absolute;
+	padding: 5px 8px;
+	border-radius: 8px;
+	top: 10px;
+	right: 10px;
+	text-align: center;
+	font-size: 11.8px;
+	font-weight: bold;
+	letter-spacing: 1.5px;
+	text-transform: uppercase;
+}
+
+.easy-tag {
+	background-color: #15d642;
+	color: white;
+}
+
+.medium-tag {
+	background-color: #677bfa;
+	color: white;
+}
+
+.hard-tag {
+	background-color: #f14d68;
+	color: white;
+}

@@ -7,6 +7,7 @@ import Header from './components/Header/Header';
 import Dashboard from './pages/Dashboard/Dashboard';
 import AccountVerify from './components/AccountVerify/AccountVerify';
 import { getLoggedInUser } from './actions/auth';
+import CoursesList from './pages/CoursesList/CoursesList';
 
 import './App.css';
 // Redux
@@ -34,6 +35,7 @@ const App = () => {
               component={AccountVerify}
             />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/courselist" component={CoursesList} />
           </Switch>
         </Fragment>
       </Router>

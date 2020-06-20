@@ -1,9 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./Header.css";
-import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
-import { logout } from "../../actions/auth";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './Header.css';
+import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
+import { logout } from '../../actions/auth';
 
 const Header = ({ isAuthenticated, logout }) => {
   return (
@@ -12,26 +12,28 @@ const Header = ({ isAuthenticated, logout }) => {
         <nav className="main-nav">
           <Link to="/">
             <img
-              src={require("../../img/logo-bookmark.svg")}
+              src={require('../../img/logo-bookmark.svg')}
               alt="page-logo"
               className="logo"
             />
           </Link>
           <ul className="nav-links">
             <li>
-              <a href="/#">Workshops</a>
-            </li>
-            <li>
-              <a href="/#">Community</a>
+              <a href="/#">Join Community</a>
             </li>
 
             {isAuthenticated ? (
-              <input
-                type="submit"
-                className="btn-red"
-                value="Logout"
-                onClick={() => logout()}
-              />
+              <>
+                <li>
+                  <Link to="/dashboard">Webinars</Link>
+                </li>
+                <input
+                  type="submit"
+                  className="btn-red"
+                  value="Logout"
+                  onClick={() => logout()}
+                />
+              </>
             ) : (
               <>
                 <li>

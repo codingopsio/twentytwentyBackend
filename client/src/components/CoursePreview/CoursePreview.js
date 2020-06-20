@@ -1,54 +1,28 @@
 import React from 'react';
 import './CoursePreview.css';
+import { connect } from 'react-redux';
+import CourseItem from '../CourseItem/CourseItem';
+import { Link } from 'react-router-dom';
 
-const CoursePreview = () => {
+const CoursePreview = ({ course }) => {
   return (
     <>
       <div className="courses-container">
-        <section class="courses">
-          <div class="courses-heading">
+        <section className="courses">
+          <div className="courses-heading">
             <div>
               <h2>Courses</h2>
-              <span class="heading-num">20</span>
+              <span className="heading-num">{course.courses.length}</span>
             </div>
             <div>
-              <a href="./courselist.html">View All</a>
+              <Link to="/courselist">View All</Link>
             </div>
           </div>
 
-          <div class="courses-cards">
-            <div class="card">
-              <img src={require('../../img/card1.png')} alt="card" />
-              <small>Lorem ipsum dolor sit amet.</small>
-              <span>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </span>
-              <p>Free</p>
-            </div>
-            <div class="card">
-              <img src={require('../../img/card1.png')} alt="card" />
-              <small>Lorem ipsum dolor sit amet.</small>
-              <span>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </span>
-              <p>Free</p>
-            </div>
-            <div class="card">
-              <img src={require('../../img/card1.png')} alt="card" />
-              <small>Lorem ipsum dolor sit amet.</small>
-              <span>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </span>
-              <p>Free</p>
-            </div>
-            <div class="card">
-              <img src={require('../../img/card1.png')} alt="card" />
-              <small>Lorem ipsum dolor sit amet.</small>
-              <span>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </span>
-              <p>Free</p>
-            </div>
+          <div className="courses-cards">
+            {course.courses.slice(0, 4).map(({ _id, ...otherProps }) => (
+              <CourseItem key={_id} {...otherProps} />
+            ))}
           </div>
         </section>
       </div>
@@ -56,4 +30,10 @@ const CoursePreview = () => {
   );
 };
 
-export default CoursePreview;
+const mapStateToProps = (state) => {
+  return {
+    course: state.course,
+  };
+};
+
+export default connect(mapStateToProps, null)(CoursePreview);

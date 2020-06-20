@@ -4,7 +4,7 @@ import { getAllWebinars } from './../../actions/course';
 import './Dashboard.css';
 import CoursePreview from '../../components/CoursePreview/CoursePreview';
 
-const Dashboard = ({ auth, getAllWebinars, courses }) => {
+const Dashboard = ({ auth, getAllWebinars }) => {
   useEffect(() => {
     getAllWebinars();
   }, []);
@@ -34,7 +34,6 @@ const Dashboard = ({ auth, getAllWebinars, courses }) => {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
-    courses: state.course.courses,
   };
 };
 

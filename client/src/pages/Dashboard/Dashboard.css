@@ -1,26 +1,25 @@
 /* Welcome section */
 .welcome {
-  background: linear-gradient(
-    90deg,
-    rgb(32, 0, 126) 0%,
-    rgb(230, 30, 182) 100%
-  );
-  padding: 2rem;
-  margin-top: 20px;
-  margin-bottom: 40px;
+	background: linear-gradient(90deg,
+			rgb(32, 0, 126) 0%,
+			rgb(230, 30, 182) 100%);
+	padding: 1.8rem;
+	margin-top: 20px;
+	margin-bottom: 40px;
 }
 
 .welcome .welcome-text {
-  font-size: 26px;
-  color: white;
-  letter-spacing: 2.2px;
-  font-weight: bold;
-  margin-bottom: 6px;
+	font-size: 26px;
+	color: white;
+	letter-spacing: 2.2px;
+	font-weight: bold;
+	margin-bottom: 6px;
+	line-height: 1.5;
 }
 
 .spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
