@@ -1,20 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./AccountForm.css";
+import { connect } from "react-redux";
 
-const AccountForm = () => {
+const AccountForm = ({ user }) => {
   return (
     <>
       <div className="form-heading">
         <div className="form-img">S</div>
-        <div className="form-name">Srijita Bhattacharya</div>
+        <div className="form-name">{user.name}</div>
       </div>
 
       <div className="form-box">
         <div className="form-box-row">
           <div>
             <div className="account-name">Account Name</div>
-            <div className="name">Srijita Bhattacharya</div>
+            <div className="name">{user.name}</div>
           </div>
           <div>
             <Link to="#" className="btn-edit">
@@ -26,7 +27,7 @@ const AccountForm = () => {
         <div className="form-box-row">
           <div>
             <div className="account-name">Email Address</div>
-            <div className="name">srijitakiki10@gmail.com</div>
+            <div className="name">{user.email}</div>
           </div>
           <div className="verified">
             <i class="fas fa-check-circle"></i> Verified
@@ -49,4 +50,10 @@ const AccountForm = () => {
   );
 };
 
-export default AccountForm;
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
+};
+
+export default connect(mapStateToProps, null)(AccountForm);
