@@ -1,19 +1,20 @@
-import React, { Fragment, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Homepage from './pages/Homepage/Homepage';
-import SignIn from './components/SignIn/SignIn';
-import SignUp from './components/SignUp/SignUp';
-import Header from './components/Header/Header';
-import Dashboard from './pages/Dashboard/Dashboard';
-import AccountVerify from './components/AccountVerify/AccountVerify';
-import { getLoggedInUser } from './actions/auth';
-import CoursesList from './pages/CoursesList/CoursesList';
+import React, { Fragment, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Homepage from "./pages/Homepage/Homepage";
+import SignIn from "./components/SignIn/SignIn";
+import SignUp from "./components/SignUp/SignUp";
+import Header from "./components/Header/Header";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import AccountVerify from "./components/AccountVerify/AccountVerify";
+import { getLoggedInUser } from "./actions/auth";
+import CoursesList from "./pages/CoursesList/CoursesList";
+import UserAccount from "./pages/UserAccount/UserAccount";
 
-import './App.css';
+import "./App.css";
 // Redux
-import { Provider } from 'react-redux';
-import store from './store';
-import PrivateRoute from './routes/PrivateRoute';
+import { Provider } from "react-redux";
+import store from "./store";
+import PrivateRoute from "./routes/PrivateRoute";
 
 const App = () => {
   useEffect(() => {
@@ -36,6 +37,7 @@ const App = () => {
             />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/courselist" component={CoursesList} />
+            <Route exact path="/useraccount" component={UserAccount} />
           </Switch>
         </Fragment>
       </Router>
