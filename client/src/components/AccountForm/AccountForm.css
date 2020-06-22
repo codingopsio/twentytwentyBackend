@@ -1,77 +1,79 @@
 .form-heading {
-  margin: 1.6rem 0;
-  color: hsl(0, 94%, 66%);
-  display: flex;
-  align-items: center;
-  font-size: 22px;
+	margin: 1.6rem 0;
+	color: hsl(0, 94%, 66%);
+	display: flex;
+	align-items: center;
+	font-size: 22px;
 }
 
 .form-heading .form-img {
-  margin-right: 1.2rem;
-  font-size: 40px;
-  font-weight: 700;
-  padding: 15px 30px;
-  border-radius: 100px;
-  background: #3555aa;
-  color: whitesmoke;
-  position: relative;
+	margin-right: 1.2rem;
+	font-size: 40px;
+	font-weight: 700;
+	padding: 15px 30px;
+	border-radius: 100px;
+	background: #3555aa;
+	color: whitesmoke;
+	position: relative;
 }
 
 .form-heading .form-img::after {
-  content: "";
-  position: absolute;
-  padding: 50px 50px;
-  border-radius: 100px;
-  background-color: rgb(185, 232, 255);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: -1;
+	content: "";
+	position: absolute;
+	padding: 50px 50px;
+	border-radius: 100px;
+	background-color: rgb(171, 217, 240);
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: -1;
 }
 
 .form-heading .form-name {
-  color: #3555aa;
-  font-weight: 600;
-  margin-left: 20px;
-  font-size: 24px;
-  letter-spacing: 1.2px;
+	color: #3555aa;
+	font-weight: 600;
+	margin-left: 20px;
+	font-size: 24px;
+	letter-spacing: 1.2px;
 }
 
 .form-box {
-  padding: 1rem;
-  background-color: rgb(247, 250, 252);
-  height: 100%;
-  width: 100%;
-  letter-spacing: 1px;
+	padding: 1rem;
+	background-color: rgb(247, 250, 252);
+	height: 100%;
+	width: 100%;
+	letter-spacing: 1px;
+	font-size: 17px;
 }
 
 .form-box .form-box-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
-.form-box .form-box-row > div:first-child {
-  margin-top: 15px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid rgb(206, 189, 189);
-  width: 90%;
+.form-box .form-box-row>div:first-child {
+	margin-top: 15px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid rgb(206, 189, 189);
+	width: 90%;
 }
 
-.form-box > div:last-child > div:first-child {
-  border: none;
+.form-box>div:last-child>div:first-child {
+	border: none;
 }
-.form-box-row > div > div:first-child {
-  color: grey;
-  margin-bottom: 7px;
-  text-transform: uppercase;
-  letter-spacing: 0;
-  font-size: 12px;
+
+.form-box-row>div>div:first-child {
+	color: grey;
+	margin-bottom: 7px;
+	text-transform: uppercase;
+	letter-spacing: 0;
+	font-size: 12px;
 }
 
 .form-box-row .verified {
-  color: lightblue;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+	color: lightblue;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }

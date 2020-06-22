@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "react-responsive-modal/styles.css";
-import { Modal } from "react-responsive-modal";
-import { connect } from "react-redux";
-import "./AccountForm.css";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
+import { connect } from 'react-redux';
+import './AccountForm.css';
 
 const AccountForm = ({ user }) => {
   const [modalState, setModalState] = useState(false);
@@ -32,14 +32,7 @@ const AccountForm = ({ user }) => {
             <Link to="#" className="btn-edit" onClick={onOpenModal}>
               <i class="fas fa-pencil-alt"></i> Edit
             </Link>
-            <Modal
-              style={{ padding: "1.4rem", backgroundColor: "pink" }}
-              width="400"
-              height="300"
-              open={modalState}
-              onClose={onCloseModal}
-              center
-            >
+            <Modal open={modalState} onClose={onCloseModal} center>
               <h4>Simple centered modal</h4>
             </Modal>
           </div>
