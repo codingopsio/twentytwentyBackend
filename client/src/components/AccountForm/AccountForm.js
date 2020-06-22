@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./AccountForm.css";
+import "react-responsive-modal/styles.css";
+import { Modal } from "react-responsive-modal";
 import { connect } from "react-redux";
+import "./AccountForm.css";
 
 const AccountForm = ({ user }) => {
+  const [modalState, setModalState] = useState(false);
+
+  const onOpenModal = () => {
+    setModalState(true);
+  };
+  const onCloseModal = () => {
+    setModalState(false);
+  };
+
   return (
     <>
       <div className="form-heading">
-        <div className="form-img">S</div>
+        <div className="form-img">{user.name.charAt(0)}</div>
         <div className="form-name">{user.name}</div>
       </div>
 
@@ -18,9 +29,19 @@ const AccountForm = ({ user }) => {
             <div className="name">{user.name}</div>
           </div>
           <div>
-            <Link to="#" className="btn-edit">
+            <Link to="#" className="btn-edit" onClick={onOpenModal}>
               <i class="fas fa-pencil-alt"></i> Edit
             </Link>
+            <Modal
+              style={{ padding: "1.4rem", backgroundColor: "pink" }}
+              width="400"
+              height="300"
+              open={modalState}
+              onClose={onCloseModal}
+              center
+            >
+              <h4>Simple centered modal</h4>
+            </Modal>
           </div>
         </div>
 
@@ -40,7 +61,7 @@ const AccountForm = ({ user }) => {
             <div className="name">Change password for your account here</div>
           </div>
           <div>
-            <Link to="#" className="btn-edit">
+            <Link to="#" className="btn-edit" onClick={onOpenModal}>
               <i class="fas fa-pencil-alt"></i> Edit
             </Link>
           </div>
