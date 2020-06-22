@@ -7,7 +7,7 @@ import CoursePreview from '../../components/CoursePreview/CoursePreview';
 const Dashboard = ({ auth, getAllWebinars }) => {
   useEffect(() => {
     getAllWebinars();
-  }, []);
+  }, [getAllWebinars]);
 
   return (
     <>

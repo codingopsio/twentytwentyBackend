@@ -6,7 +6,7 @@ const CourseItem = ({ photo, title, description, plan, difficulty }) => {
   return (
     <>
       <div className="card">
-        <div class="easy-tag">{difficulty}</div>
+        <div className="easy-tag">{difficulty}</div>
         {photo === 'no-photo.jpg' ? (
           <img src={require('../../img/Deno.jpg')} alt="card" />
         ) : (

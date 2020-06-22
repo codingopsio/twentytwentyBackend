@@ -15,7 +15,11 @@ const CoursePreview = ({ course }) => {
               <span className="heading-num">{course.courses.length}</span>
             </div>
             <div>
-              <Link to="/courselist">View All</Link>
+              <Link
+                style={{ color: 'grey', fontSize: '17px' }}
+                to="/courselist">
+                View All
+              </Link>
             </div>
           </div>
 
