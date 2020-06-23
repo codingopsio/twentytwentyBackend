@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "react-responsive-modal/styles.css";
-import { Modal } from "react-responsive-modal";
-import { connect } from "react-redux";
-import "./AccountForm.css";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
+import { connect } from 'react-redux';
+import './AccountForm.css';
 
 const AccountForm = ({ user }) => {
   const [modalNameState, setModalNameState] = useState(false);
   const [modalPassState, setModalPassState] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    password: "",
-    newpassword: "",
-    oldpassword: "",
+    name: '',
+    password: '',
+    newpassword: '',
+    oldpassword: '',
   });
 
   const onHandleChange = (e) => {
@@ -22,12 +22,14 @@ const AccountForm = ({ user }) => {
   const onHandleSubmit = (e) => {
     e.preventDefault();
     setFormData({
-      name: "",
-      password: "",
-      newpassword: "",
-      oldpassword: "",
+      name: '',
+      password: '',
+      newpassword: '',
+      oldpassword: '',
     });
     onCloseModal();
+
+    console.log(formData);
   };
 
   const onOpenModal = () => {
@@ -60,22 +62,20 @@ const AccountForm = ({ user }) => {
           </div>
           <div>
             <Link to="#" className="btn-edit" onClick={onOpenModal}>
-              <i class="fas fa-pencil-alt"></i> Edit
+              <i className="fas fa-pencil-alt"></i> Edit
             </Link>
             <Modal open={modalNameState} onClose={onCloseModal} center>
               <form
                 onSubmit={(e) => onHandleSubmit(e)}
-                style={{ padding: "2rem" }}
-              >
+                style={{ padding: '2rem' }}>
                 <label
                   style={{
-                    display: "block",
-                    width: "100%",
-                    marginBottom: "15px",
-                    fontSize: "17px",
+                    display: 'block',
+                    width: '100%',
+                    marginBottom: '15px',
+                    fontSize: '17px',
                   }}
-                  for="fname"
-                >
+                  for="fname">
                   First Name
                 </label>
                 <input
@@ -84,10 +84,10 @@ const AccountForm = ({ user }) => {
                   name="name"
                   placeholder="Your name.."
                   style={{
-                    display: "block",
-                    padding: "0.8rem",
-                    marginBottom: "15px",
-                    width: "100%",
+                    display: 'block',
+                    padding: '0.8rem',
+                    marginBottom: '15px',
+                    width: '100%',
                   }}
                   onChange={(e) => onHandleChange(e)}
                   value={formData.name}
@@ -96,7 +96,7 @@ const AccountForm = ({ user }) => {
                 <input
                   type="submit"
                   value="Submit"
-                  style={{ display: "block", width: "100%", cursor: "pointer" }}
+                  style={{ display: 'block', width: '100%', cursor: 'pointer' }}
                 />
               </form>
             </Modal>
@@ -109,7 +109,7 @@ const AccountForm = ({ user }) => {
             <div className="name">{user.email}</div>
           </div>
           <div className="verified">
-            <i class="fas fa-check-circle"></i> Verified
+            <i className="fas fa-check-circle"></i> Verified
           </div>
         </div>
 
@@ -120,18 +120,17 @@ const AccountForm = ({ user }) => {
           </div>
           <div>
             <Link to="#" className="btn-edit" onClick={onOpenPasswordModal}>
-              <i class="fas fa-pencil-alt"></i> Edit
+              <i className="fas fa-pencil-alt"></i> Edit
             </Link>
             <Modal open={modalPassState} onClose={onClosePassModal} center>
-              <form style={{ padding: "2rem" }}>
+              <form style={{ padding: '2rem' }}>
                 <label
                   style={{
-                    display: "block",
-                    marginBottom: "15px",
-                    fontSize: "17px",
+                    display: 'block',
+                    marginBottom: '15px',
+                    fontSize: '17px',
                   }}
-                  for="fname"
-                >
+                  for="fname">
                   Old Password
                 </label>
                 <input
@@ -140,21 +139,20 @@ const AccountForm = ({ user }) => {
                   name="oldpassword"
                   placeholder="Enter Old Password"
                   style={{
-                    display: "block",
-                    padding: "0.8rem",
-                    marginBottom: "15px",
-                    width: "100%",
+                    display: 'block',
+                    padding: '0.8rem',
+                    marginBottom: '15px',
+                    width: '100%',
                   }}
                 />
 
                 <label
                   style={{
-                    display: "block",
-                    marginBottom: "15px",
-                    fontSize: "17px",
+                    display: 'block',
+                    marginBottom: '15px',
+                    fontSize: '17px',
                   }}
-                  for="fname"
-                >
+                  for="fname">
                   New Password
                 </label>
                 <input
@@ -163,21 +161,20 @@ const AccountForm = ({ user }) => {
                   name="newpassword"
                   placeholder="Enter New Password"
                   style={{
-                    display: "block",
-                    padding: "0.8rem",
-                    marginBottom: "15px",
-                    width: "100%",
+                    display: 'block',
+                    padding: '0.8rem',
+                    marginBottom: '15px',
+                    width: '100%',
                   }}
                 />
 
                 <label
                   style={{
-                    display: "block",
-                    marginBottom: "15px",
-                    fontSize: "17px",
+                    display: 'block',
+                    marginBottom: '15px',
+                    fontSize: '17px',
                   }}
-                  for="fname"
-                >
+                  for="fname">
                   Confirm Password
                 </label>
                 <input
@@ -186,17 +183,17 @@ const AccountForm = ({ user }) => {
                   name="confirmpassword"
                   placeholder="Confirm Password."
                   style={{
-                    display: "block",
-                    padding: "0.8rem",
-                    marginBottom: "15px",
-                    width: "100%",
+                    display: 'block',
+                    padding: '0.8rem',
+                    marginBottom: '15px',
+                    width: '100%',
                   }}
                 />
 
                 <input
                   type="submit"
                   value="Submit"
-                  style={{ display: "block", width: "100%", cursor: "pointer" }}
+                  style={{ display: 'block', width: '100%', cursor: 'pointer' }}
                 />
               </form>
             </Modal>
