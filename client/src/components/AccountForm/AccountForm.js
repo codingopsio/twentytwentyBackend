@@ -1,22 +1,26 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "react-responsive-modal/styles.css";
-import { Modal } from "react-responsive-modal";
-import { connect } from "react-redux";
-import { updateName } from "../../actions/auth";
-import "./AccountForm.css";
-import { updatePassword } from "../../actions/auth";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
+import { connect } from 'react-redux';
+import { updateName } from '../../actions/auth';
+import './AccountForm.css';
+import { updatePassword } from '../../actions/auth';
 
-const AccountForm = ({ user, updateName, updatePassword }) => {
+const AccountForm = ({ user, error, updateName, updatePassword }) => {
   const [modalNameState, setModalNameState] = useState(false);
   const [modalPassState, setModalPassState] = useState(false);
-  const [responseError, setResponseError] = useState("");
+  const [responseError, setResponseError] = useState('');
   const [formData, setFormData] = useState({
-    name: "",
-    oldpassword: "",
-    newpassword: "",
-    confirmpassword: "",
+    name: '',
+    oldpassword: '',
+    newpassword: '',
+    confirmpassword: '',
   });
+
+  useEffect(() => {
+    setResponseError(error);
+  }, [error]);
 
   const onHandleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,34 +32,38 @@ const AccountForm = ({ user, updateName, updatePassword }) => {
       updateName(formData.name);
 
       setFormData({
-        name: "",
-        password: "",
-        newpassword: "",
-        oldpassword: "",
+        name: '',
+        oldpassword: '',
+        newpassword: '',
+        confirmpassword: '',
       });
       onCloseModal();
     } else {
-      setResponseError("Please enter a valid name");
+      setResponseError('Please enter a valid name');
     }
   };
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
-    try {
+    setResponseError('');
+
+    if (formData.newpassword !== formData.confirmpassword) {
+      setResponseError('please recheck password');
+    } else if (error === 'Incorrect password') {
+      setResponseError(error);
+    } else {
       updatePassword(formData.oldpassword, formData.newpassword);
-    } catch (err) {
-      console.log(err);
+
+      setFormData({
+        name: '',
+        oldpassword: '',
+        newpassword: '',
+        confirmpassword: '',
+      });
+      onClosePassModal();
     }
 
-    // if(formData.oldpassword.trim().length !== 0 && formData.oldpassword.length >= 6)
-
-    setFormData({
-      name: "",
-      password: "",
-      newpassword: "",
-      oldpassword: "",
-    });
-    onClosePassModal();
+    console.log(formData);
   };
 
   const onOpenModal = () => {
@@ -68,7 +76,7 @@ const AccountForm = ({ user, updateName, updatePassword }) => {
 
   const onCloseModal = () => {
     setModalNameState(false);
-    setResponseError("");
+    setResponseError('');
   };
   const onClosePassModal = () => {
     setModalPassState(false);
@@ -94,17 +102,15 @@ const AccountForm = ({ user, updateName, updatePassword }) => {
             <Modal open={modalNameState} onClose={onCloseModal} center>
               <form
                 onSubmit={(e) => handleNameSubmit(e)}
-                style={{ padding: "2rem" }}
-              >
+                style={{ padding: '2rem' }}>
                 <label
                   style={{
-                    display: "block",
-                    width: "100%",
-                    marginBottom: "15px",
-                    fontSize: "17px",
+                    display: 'block',
+                    width: '100%',
+                    marginBottom: '15px',
+                    fontSize: '17px',
                   }}
-                  htmlFor="fname"
-                >
+                  htmlFor="fname">
                   First Name
                 </label>
                 <input
@@ -113,10 +119,10 @@ const AccountForm = ({ user, updateName, updatePassword }) => {
                   name="name"
                   placeholder="Your name.."
                   style={{
-                    display: "block",
-                    padding: "0.8rem",
-                    marginBottom: "15px",
-                    width: "100%",
+                    display: 'block',
+                    padding: '0.8rem',
+                    marginBottom: '15px',
+                    width: '100%',
                   }}
                   onChange={(e) => onHandleChange(e)}
                   value={formData.name}
@@ -129,7 +135,7 @@ const AccountForm = ({ user, updateName, updatePassword }) => {
                 <input
                   type="submit"
                   value="Submit"
-                  style={{ display: "block", width: "100%", cursor: "pointer" }}
+                  style={{ display: 'block', width: '100%', cursor: 'pointer' }}
                 />
               </form>
             </Modal>
@@ -157,17 +163,15 @@ const AccountForm = ({ user, updateName, updatePassword }) => {
             </Link>
             <Modal open={modalPassState} onClose={onClosePassModal} center>
               <form
-                style={{ padding: "2rem" }}
-                onSubmit={(e) => handlePasswordSubmit(e)}
-              >
+                style={{ padding: '2rem' }}
+                onSubmit={(e) => handlePasswordSubmit(e)}>
                 <label
                   style={{
-                    display: "block",
-                    marginBottom: "15px",
-                    fontSize: "17px",
+                    display: 'block',
+                    marginBottom: '15px',
+                    fontSize: '17px',
                   }}
-                  htmlFor="fname"
-                >
+                  htmlFor="fname">
                   Old Password
                 </label>
                 <input
@@ -176,10 +180,10 @@ const AccountForm = ({ user, updateName, updatePassword }) => {
                   name="oldpassword"
                   placeholder="Enter Old Password"
                   style={{
-                    display: "block",
-                    padding: "0.8rem",
-                    marginBottom: "15px",
-                    width: "100%",
+                    display: 'block',
+                    padding: '0.8rem',
+                    marginBottom: '15px',
+                    width: '100%',
                   }}
                   onChange={(e) => onHandleChange(e)}
                   value={formData.oldpassword}
@@ -187,12 +191,11 @@ const AccountForm = ({ user, updateName, updatePassword }) => {
 
                 <label
                   style={{
-                    display: "block",
-                    marginBottom: "15px",
-                    fontSize: "17px",
+                    display: 'block',
+                    marginBottom: '15px',
+                    fontSize: '17px',
                   }}
-                  htmlFor="fname"
-                >
+                  htmlFor="fname">
                   New Password
                 </label>
                 <input
@@ -201,10 +204,10 @@ const AccountForm = ({ user, updateName, updatePassword }) => {
                   name="newpassword"
                   placeholder="Enter New Password"
                   style={{
-                    display: "block",
-                    padding: "0.8rem",
-                    marginBottom: "15px",
-                    width: "100%",
+                    display: 'block',
+                    padding: '0.8rem',
+                    marginBottom: '15px',
+                    width: '100%',
                   }}
                   onChange={(e) => onHandleChange(e)}
                   value={formData.newpassword}
@@ -212,12 +215,11 @@ const AccountForm = ({ user, updateName, updatePassword }) => {
 
                 <label
                   style={{
-                    display: "block",
-                    marginBottom: "15px",
-                    fontSize: "17px",
+                    display: 'block',
+                    marginBottom: '15px',
+                    fontSize: '17px',
                   }}
-                  htmlFor="fname"
-                >
+                  htmlFor="fname">
                   Confirm Password
                 </label>
                 <input
@@ -226,19 +228,27 @@ const AccountForm = ({ user, updateName, updatePassword }) => {
                   name="confirmpassword"
                   placeholder="Confirm Password."
                   style={{
-                    display: "block",
-                    padding: "0.8rem",
-                    marginBottom: "15px",
-                    width: "100%",
+                    display: 'block',
+                    padding: '0.8rem',
+                    marginBottom: '15px',
+                    width: '100%',
                   }}
                   onChange={(e) => onHandleChange(e)}
                   value={formData.confirmpassword}
                 />
 
+                {responseError ? (
+                  <span className="reserror">{responseError}</span>
+                ) : null}
+
                 <input
                   type="submit"
                   value="Submit"
-                  style={{ display: "block", width: "100%", cursor: "pointer" }}
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    cursor: 'pointer',
+                  }}
                 />
               </form>
             </Modal>
@@ -252,6 +262,7 @@ const AccountForm = ({ user, updateName, updatePassword }) => {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    error: state.auth.error,
   };
 };
 

@@ -7,13 +7,16 @@ import {
   LOAD_USER_FAIL,
   UPDATE_NAME_SUCCESS,
   UPDATE_NAME_FAILURE,
-} from "../actions/types";
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_FAILURE,
+} from '../actions/types';
 
 const initialState = {
-  token: localStorage.getItem("token"),
+  token: localStorage.getItem('token'),
   isAuthenticated: null,
   loading: true,
   user: null,
+  error: null,
 };
 
 export default function (state = initialState, action) {
@@ -29,7 +32,8 @@ export default function (state = initialState, action) {
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      localStorage.setItem("token", payload.token);
+    case UPDATE_PASSWORD_SUCCESS:
+      localStorage.setItem('token', payload.token);
       return {
         ...state,
         ...payload,
@@ -47,13 +51,19 @@ export default function (state = initialState, action) {
     case LOGIN_FAILURE:
     case LOAD_USER_FAIL:
     case UPDATE_NAME_FAILURE:
-      localStorage.removeItem("token");
+      localStorage.removeItem('token');
       return {
         ...state,
         token: null,
         isAuthenticated: false,
         loading: false,
         user: null,
+      };
+
+    case UPDATE_PASSWORD_FAILURE:
+      return {
+        ...state,
+        error: payload,
       };
     default:
       return state;

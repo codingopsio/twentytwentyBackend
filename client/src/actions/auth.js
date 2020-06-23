@@ -8,14 +8,16 @@ import {
   FREE_COURSE_LOAD_FAILURE,
   UPDATE_NAME_SUCCESS,
   UPDATE_NAME_FAILURE,
-} from "./types";
-import axios from "axios";
+  UPDATE_PASSWORD_FAILURE,
+  UPDATE_PASSWORD_SUCCESS,
+} from './types';
+import axios from 'axios';
 
 // For Loading the user
 export const getLoggedInUser = () => async (dispatch) => {
   try {
     if (localStorage.token) {
-      const response = await axios.get("/api/v1/auth/me", {
+      const response = await axios.get('/api/v1/auth/me', {
         headers: {
           Authorization: `Bearer ${localStorage.token}`,
         },
@@ -55,14 +57,14 @@ export const register = (id) => async (dispatch) => {
 export const login = (email, password) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
 
   const body = JSON.stringify({ email, password });
 
   try {
-    let response = await axios.post("/api/v1/auth/login", body, config);
+    let response = await axios.post('/api/v1/auth/login', body, config);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: response.data,
@@ -91,7 +93,7 @@ export const logout = () => (dispatch) => {
 export const updateName = (name) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.token}`,
     },
   };
@@ -99,7 +101,7 @@ export const updateName = (name) => async (dispatch) => {
   console.log(body);
   try {
     const response = await axios.put(
-      "/api/v1/auth/updatedetails",
+      '/api/v1/auth/updatedetails',
       body,
       config
     );
@@ -124,24 +126,28 @@ export const updatePassword = (currentPassword, newPassword) => async (
 ) => {
   const config = {
     headers: {
-      "Content-Type": "Application/json",
+      'Content-Type': 'Application/json',
       Authorization: `Bearer ${localStorage.token}`,
     },
   };
 
   let body = JSON.stringify({ currentPassword, newPassword });
 
-  console.log(body);
-
   try {
     const response = await axios.put(
-      "/api/v1/auth/updatepassword",
+      '/api/v1/auth/updatepassword',
       body,
       config
     );
 
-    console.log(response.data);
+    dispatch({
+      type: UPDATE_PASSWORD_SUCCESS,
+      payload: response.data,
+    });
   } catch (err) {
-    console.log(err);
+    dispatch({
+      type: UPDATE_PASSWORD_FAILURE,
+      payload: err.response.data.error,
+    });
   }
 };
