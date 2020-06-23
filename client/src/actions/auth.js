@@ -6,14 +6,16 @@ import {
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
   FREE_COURSE_LOAD_FAILURE,
-} from './types';
-import axios from 'axios';
+  UPDATE_NAME_SUCCESS,
+  UPDATE_NAME_FAILURE,
+} from "./types";
+import axios from "axios";
 
 // For Loading the user
 export const getLoggedInUser = () => async (dispatch) => {
   try {
     if (localStorage.token) {
-      const response = await axios.get('/api/v1/auth/me', {
+      const response = await axios.get("/api/v1/auth/me", {
         headers: {
           Authorization: `Bearer ${localStorage.token}`,
         },
@@ -53,14 +55,14 @@ export const register = (id) => async (dispatch) => {
 export const login = (email, password) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
 
   const body = JSON.stringify({ email, password });
 
   try {
-    let response = await axios.post('/api/v1/auth/login', body, config);
+    let response = await axios.post("/api/v1/auth/login", body, config);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: response.data,
@@ -83,4 +85,63 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: FREE_COURSE_LOAD_FAILURE,
   });
+};
+
+// update user name
+export const updateName = (name) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.token}`,
+    },
+  };
+  let body = JSON.stringify({ name });
+  console.log(body);
+  try {
+    const response = await axios.put(
+      "/api/v1/auth/updatedetails",
+      body,
+      config
+    );
+    dispatch({
+      type: UPDATE_NAME_SUCCESS,
+      payload: response.data,
+    });
+    dispatch(getLoggedInUser());
+  } catch (err) {
+    dispatch({
+      type: UPDATE_NAME_FAILURE,
+    });
+    dispatch({
+      type: FREE_COURSE_LOAD_FAILURE,
+    });
+  }
+};
+
+// Update User password
+export const updatePassword = (currentPassword, newPassword) => async (
+  dispatch
+) => {
+  const config = {
+    headers: {
+      "Content-Type": "Application/json",
+      Authorization: `Bearer ${localStorage.token}`,
+    },
+  };
+
+  let body = JSON.stringify({ currentPassword, newPassword });
+
+  console.log(body);
+
+  try {
+    const response = await axios.put(
+      "/api/v1/auth/updatepassword",
+      body,
+      config
+    );
+
+    console.log(response.data);
+  } catch (err) {
+    console.log(err);
+  }
 };
