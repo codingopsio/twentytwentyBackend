@@ -75,7 +75,7 @@ const AccountForm = ({ user }) => {
                     marginBottom: '15px',
                     fontSize: '17px',
                   }}
-                  for="fname">
+                  htmlFor="fname">
                   First Name
                 </label>
                 <input
@@ -130,7 +130,7 @@ const AccountForm = ({ user }) => {
                     marginBottom: '15px',
                     fontSize: '17px',
                   }}
-                  for="fname">
+                  htmlFor="fname">
                   Old Password
                 </label>
                 <input
@@ -152,7 +152,7 @@ const AccountForm = ({ user }) => {
                     marginBottom: '15px',
                     fontSize: '17px',
                   }}
-                  for="fname">
+                  htmlFor="fname">
                   New Password
                 </label>
                 <input
@@ -174,7 +174,7 @@ const AccountForm = ({ user }) => {
                     marginBottom: '15px',
                     fontSize: '17px',
                   }}
-                  for="fname">
+                  htmlFor="fname">
                   Confirm Password
                 </label>
                 <input
