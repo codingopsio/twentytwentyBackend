@@ -9,6 +9,8 @@ import {
   UPDATE_NAME_FAILURE,
   UPDATE_PASSWORD_SUCCESS,
   UPDATE_PASSWORD_FAILURE,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAILURE,
 } from '../actions/types';
 
 const initialState = {
@@ -47,6 +49,12 @@ export default function (state = initialState, action) {
         loading: false,
         user: payload.data,
       };
+    case FORGOT_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        ...payload,
+        loading: false,
+      };
     case REGISTER_FAILURE:
     case LOGIN_FAILURE:
     case LOAD_USER_FAIL:
@@ -61,6 +69,7 @@ export default function (state = initialState, action) {
       };
 
     case UPDATE_PASSWORD_FAILURE:
+    case FORGOT_PASSWORD_FAILURE:
       return {
         ...state,
         error: payload,

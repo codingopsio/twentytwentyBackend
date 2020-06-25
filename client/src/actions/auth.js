@@ -10,6 +10,8 @@ import {
   UPDATE_NAME_FAILURE,
   UPDATE_PASSWORD_FAILURE,
   UPDATE_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAILURE,
 } from './types';
 import axios from 'axios';
 
@@ -149,5 +151,33 @@ export const updatePassword = (currentPassword, newPassword) => async (
       type: UPDATE_PASSWORD_FAILURE,
       payload: err.response.data.error,
     });
+  }
+};
+
+// forgot user password
+export const forgotPassword = (email) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'Application/json',
+    },
+  };
+
+  const body = JSON.stringify({ email });
+  try {
+    const response = await axios.post(
+      '/api/v1/auth/forgotpassword',
+      body,
+      config
+    );
+    dispatch({
+      type: FORGOT_PASSWORD_SUCCESS,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: FORGOT_PASSWORD_FAILURE,
+      payload: err.response.data.error,
+    });
+    return err.response.data.error;
   }
 };

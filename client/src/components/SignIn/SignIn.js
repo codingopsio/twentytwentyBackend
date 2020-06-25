@@ -83,7 +83,7 @@ const SignIn = ({ isAuthenticated, login }) => {
               </div>
             </div>
             <Link to="/signup">Signup here </Link>
-            <a href="/#"> Forgot Password?</a>
+            <Link to="/forgetpassword"> Forgot Password?</Link>
             {responseError ? (
               <span className="reserror">{responseError}</span>
             ) : null}

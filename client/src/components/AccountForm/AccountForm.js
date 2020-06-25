@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { updateName } from '../../actions/auth';
 import './AccountForm.css';
 import { updatePassword } from '../../actions/auth';
-import { set } from 'mongoose';
 
 const AccountForm = ({ user, error, updateName, updatePassword }) => {
   const [modalNameState, setModalNameState] = useState(false);
