@@ -6,10 +6,12 @@ import { connect } from 'react-redux';
 import { updateName } from '../../actions/auth';
 import './AccountForm.css';
 import { updatePassword } from '../../actions/auth';
+import { set } from 'mongoose';
 
 const AccountForm = ({ user, error, updateName, updatePassword }) => {
   const [modalNameState, setModalNameState] = useState(false);
   const [modalPassState, setModalPassState] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [responseError, setResponseError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
@@ -28,6 +30,7 @@ const AccountForm = ({ user, error, updateName, updatePassword }) => {
 
   const handleNameSubmit = async (e) => {
     e.preventDefault();
+    setResponseError('');
     if (formData.name.trim().length !== 0) {
       updateName(formData.name);
 
@@ -46,24 +49,29 @@ const AccountForm = ({ user, error, updateName, updatePassword }) => {
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     setResponseError('');
-
+    setLoading(true);
     if (formData.newpassword !== formData.confirmpassword) {
-      setResponseError('please recheck password');
-    } else if (error === 'Incorrect password') {
-      setResponseError(error);
-    } else {
-      updatePassword(formData.oldpassword, formData.newpassword);
+      setLoading(false);
+      return setResponseError('passwords should match');
+    }
+    fetchAndUpdatePassword(formData.oldpassword, formData.newpassword);
+  };
 
+  const fetchAndUpdatePassword = async (oldPassword, newPassword) => {
+    try {
+      await updatePassword(oldPassword, newPassword);
+      setLoading(false);
       setFormData({
         name: '',
         oldpassword: '',
         newpassword: '',
         confirmpassword: '',
       });
-      onClosePassModal();
+    } catch (err) {
+      if (!err) {
+        onClosePassModal();
+      }
     }
-
-    console.log(formData);
   };
 
   const onOpenModal = () => {
@@ -162,95 +170,103 @@ const AccountForm = ({ user, error, updateName, updatePassword }) => {
               <i className="fas fa-pencil-alt"></i> Edit
             </Link>
             <Modal open={modalPassState} onClose={onClosePassModal} center>
-              <form
-                style={{ padding: '2rem' }}
-                onSubmit={(e) => handlePasswordSubmit(e)}>
-                <label
-                  style={{
-                    display: 'block',
-                    marginBottom: '15px',
-                    fontSize: '17px',
-                  }}
-                  htmlFor="fname">
-                  Old Password
-                </label>
-                <input
-                  type="password"
-                  id="password-1"
-                  name="oldpassword"
-                  placeholder="Enter Old Password"
-                  style={{
-                    display: 'block',
-                    padding: '0.8rem',
-                    marginBottom: '15px',
-                    width: '100%',
-                  }}
-                  onChange={(e) => onHandleChange(e)}
-                  value={formData.oldpassword}
+              {loading ? (
+                <img
+                  className="spinner"
+                  src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"
+                  alt="spinner"
                 />
+              ) : (
+                <form
+                  style={{ padding: '2rem' }}
+                  onSubmit={(e) => handlePasswordSubmit(e)}>
+                  <label
+                    style={{
+                      display: 'block',
+                      marginBottom: '15px',
+                      fontSize: '17px',
+                    }}
+                    htmlFor="fname">
+                    Old Password
+                  </label>
+                  <input
+                    type="password"
+                    id="password-1"
+                    name="oldpassword"
+                    placeholder="Enter Old Password"
+                    style={{
+                      display: 'block',
+                      padding: '0.8rem',
+                      marginBottom: '15px',
+                      width: '100%',
+                    }}
+                    onChange={(e) => onHandleChange(e)}
+                    value={formData.oldpassword}
+                  />
 
-                <label
-                  style={{
-                    display: 'block',
-                    marginBottom: '15px',
-                    fontSize: '17px',
-                  }}
-                  htmlFor="fname">
-                  New Password
-                </label>
-                <input
-                  type="password"
-                  id="password-2"
-                  name="newpassword"
-                  placeholder="Enter New Password"
-                  style={{
-                    display: 'block',
-                    padding: '0.8rem',
-                    marginBottom: '15px',
-                    width: '100%',
-                  }}
-                  onChange={(e) => onHandleChange(e)}
-                  value={formData.newpassword}
-                />
+                  <label
+                    style={{
+                      display: 'block',
+                      marginBottom: '15px',
+                      fontSize: '17px',
+                    }}
+                    htmlFor="fname">
+                    New Password
+                  </label>
+                  <input
+                    type="password"
+                    id="password-2"
+                    name="newpassword"
+                    placeholder="Enter New Password"
+                    style={{
+                      display: 'block',
+                      padding: '0.8rem',
+                      marginBottom: '15px',
+                      width: '100%',
+                    }}
+                    onChange={(e) => onHandleChange(e)}
+                    value={formData.newpassword}
+                  />
 
-                <label
-                  style={{
-                    display: 'block',
-                    marginBottom: '15px',
-                    fontSize: '17px',
-                  }}
-                  htmlFor="fname">
-                  Confirm Password
-                </label>
-                <input
-                  type="password"
-                  id="password-3"
-                  name="confirmpassword"
-                  placeholder="Confirm Password."
-                  style={{
-                    display: 'block',
-                    padding: '0.8rem',
-                    marginBottom: '15px',
-                    width: '100%',
-                  }}
-                  onChange={(e) => onHandleChange(e)}
-                  value={formData.confirmpassword}
-                />
+                  <label
+                    style={{
+                      display: 'block',
+                      marginBottom: '15px',
+                      fontSize: '17px',
+                    }}
+                    htmlFor="fname">
+                    Confirm Password
+                  </label>
+                  <input
+                    type="password"
+                    id="password-3"
+                    name="confirmpassword"
+                    placeholder="Confirm Password."
+                    style={{
+                      display: 'block',
+                      padding: '0.8rem',
+                      marginBottom: '15px',
+                      width: '100%',
+                    }}
+                    onChange={(e) => onHandleChange(e)}
+                    value={formData.confirmpassword}
+                  />
 
-                {responseError ? (
-                  <span className="reserror">{responseError}</span>
-                ) : null}
+                  {responseError ? (
+                    <span className="reserror">{responseError}</span>
+                  ) : null}
 
-                <input
-                  type="submit"
-                  value="Submit"
-                  style={{
-                    display: 'block',
-                    width: '100%',
-                    cursor: 'pointer',
-                  }}
-                />
-              </form>
+                  <input
+                    type="submit"
+                    value="Submit"
+                    style={{
+                      display: 'block',
+                      width: '100%',
+                      cursor: 'pointer',
+                    }}
+                  />
+                </form>
+              )}
             </Modal>
           </div>
         </div>
