@@ -10,6 +10,7 @@ import { getLoggedInUser } from './actions/auth';
 import CoursesList from './pages/CoursesList/CoursesList';
 import UserAccount from './pages/UserAccount/UserAccount';
 import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
+import ResetPassword from './pages/ResetPassword/ResetPassword';
 import './App.css';
 
 // Redux
@@ -37,6 +38,11 @@ const App = () => {
               component={AccountVerify}
             />
             <Route exact path="/forgetpassword" component={ForgetPassword} />
+            <Route
+              exact
+              path="/api/v1/auth/resetpassword/:id"
+              component={ResetPassword}
+            />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/courselist" component={CoursesList} />
             <PrivateRoute exact path="/useraccount" component={UserAccount} />

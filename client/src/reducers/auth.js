@@ -11,6 +11,8 @@ import {
   UPDATE_PASSWORD_FAILURE,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAILURE,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
 } from '../actions/types';
 
 const initialState = {
@@ -35,6 +37,7 @@ export default function (state = initialState, action) {
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
     case UPDATE_PASSWORD_SUCCESS:
+    case RESET_PASSWORD_SUCCESS:
       localStorage.setItem('token', payload.token);
       return {
         ...state,
@@ -70,6 +73,7 @@ export default function (state = initialState, action) {
 
     case UPDATE_PASSWORD_FAILURE:
     case FORGOT_PASSWORD_FAILURE:
+    case RESET_PASSWORD_FAILURE:
       return {
         ...state,
         error: payload,

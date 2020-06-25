@@ -12,6 +12,8 @@ import {
   UPDATE_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAILURE,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
 } from './types';
 import axios from 'axios';
 
@@ -178,6 +180,36 @@ export const forgotPassword = (email) => async (dispatch) => {
       type: FORGOT_PASSWORD_FAILURE,
       payload: err.response.data.error,
     });
+    return err.response.data.error;
+  }
+};
+
+// For resetting user new password
+export const resetPassword = (paramId, password) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'Application/json',
+    },
+  };
+  const body = JSON.stringify({ password });
+  try {
+    const response = await axios.post(
+      `/api/v1/auth/resetpassword/${paramId}`,
+      body,
+      config
+    );
+    dispatch({
+      type: RESET_PASSWORD_SUCCESS,
+      payload: response.data,
+    });
+
+    dispatch(getLoggedInUser());
+  } catch (err) {
+    dispatch({
+      type: RESET_PASSWORD_FAILURE,
+      payload: err.response.data.error,
+    });
+
     return err.response.data.error;
   }
 };
