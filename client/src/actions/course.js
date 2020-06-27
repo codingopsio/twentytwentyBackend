@@ -5,9 +5,18 @@ import {
 import axios from 'axios';
 
 // For loading all webinars
-export const getAllWebinars = () => async (dispatch) => {
+export const getAllWebinars = (param) => async (dispatch) => {
+  let query;
+  if (param) {
+    query = `ManageTopics[in]=${param}`;
+  } else {
+    query = '';
+  }
+
   try {
-    let response = await axios.get('/api/v1/webinars');
+    let response = await axios.get(`/api/v1/webinars?${query}`);
+
+    console.log(response.data);
 
     dispatch({
       type: FREE_COURSE_LOAD_SUCCESS,
