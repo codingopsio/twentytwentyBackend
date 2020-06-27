@@ -1,6 +1,8 @@
 import {
   FREE_COURSE_LOAD_SUCCESS,
   FREE_COURSE_LOAD_FAILURE,
+  CREATE_WEBINAR_SUCCESS,
+  CREATE_WEBINAR_FAILURE,
 } from '../actions/types';
 
 const initialState = {
@@ -18,7 +20,14 @@ export default function (state = initialState, action) {
         courses: payload.data,
         loading: false,
       };
+    case CREATE_WEBINAR_SUCCESS:
+      return {
+        ...state,
+        ...payload,
+        loading: false,
+      };
     case FREE_COURSE_LOAD_FAILURE:
+    case CREATE_WEBINAR_FAILURE:
       return {
         ...state,
         courses: [],

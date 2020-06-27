@@ -11,6 +11,7 @@ import CoursesList from './pages/CoursesList/CoursesList';
 import UserAccount from './pages/UserAccount/UserAccount';
 import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
+import AddCourse from './components/AdminComponents/AddCourse/AddCourse';
 import './App.css';
 
 // Redux
@@ -46,6 +47,7 @@ const App = () => {
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/courselist" component={CoursesList} />
             <PrivateRoute exact path="/useraccount" component={UserAccount} />
+            <Route exact path="/addcourse" component={AddCourse} />
           </Switch>
         </Fragment>
       </Router>
