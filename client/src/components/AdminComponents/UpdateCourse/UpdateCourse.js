@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { createWebinar } from '../../../actions/course';
+import { updateWebinar } from '../../../actions/course';
 import { connect } from 'react-redux';
-import './AddCourse.css';
+import './UpdateCourse.css';
 
-const AddCourse = ({ createWebinar }) => {
+const UpdateCourse = ({ updateWebinar }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -26,9 +26,9 @@ const AddCourse = ({ createWebinar }) => {
     setMsg('');
     setLoading(true);
 
-    await createWebinar(formData);
+    await updateWebinar(formData);
 
-    setMsg('Webinar Added');
+    setMsg('Webinar Updated');
     setLoading(false);
 
     setFormData({
@@ -53,7 +53,7 @@ const AddCourse = ({ createWebinar }) => {
       ) : (
         <section className="main">
           <div className="primary-heading">
-            <h1>Add a Webinar</h1>
+            <h1>Update a Webinar</h1>
           </div>
 
           <div className="form">
@@ -121,7 +121,7 @@ const AddCourse = ({ createWebinar }) => {
               {msg ? <span className="reserror">{msg}</span> : null}
 
               <button type="submit" className="btn-add">
-                Add Webinar
+                Update Webinar
               </button>
             </form>
           </div>
@@ -133,8 +133,8 @@ const AddCourse = ({ createWebinar }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createWebinar: (data) => dispatch(createWebinar(data)),
+    updateWebinar: (data) => dispatch(updateWebinar(data)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(AddCourse);
+export default connect(null, mapDispatchToProps)(UpdateCourse);

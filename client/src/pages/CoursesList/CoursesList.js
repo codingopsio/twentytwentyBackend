@@ -27,7 +27,7 @@ const CoursesList = ({ course, getAllWebinars }) => {
 
   useEffect(() => {
     getAllWebinars(category);
-  }, [category]);
+  }, [category, getAllWebinars]);
 
   const handleChange = (e) => {
     e.preventDefault();

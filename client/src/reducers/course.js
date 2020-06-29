@@ -3,6 +3,8 @@ import {
   FREE_COURSE_LOAD_FAILURE,
   CREATE_WEBINAR_SUCCESS,
   CREATE_WEBINAR_FAILURE,
+  ADD_IMAGE_SUCCESS,
+  ADD_IMAGE_FAILURE,
 } from '../actions/types';
 
 const initialState = {
@@ -21,6 +23,7 @@ export default function (state = initialState, action) {
         loading: false,
       };
     case CREATE_WEBINAR_SUCCESS:
+    case ADD_IMAGE_SUCCESS:
       return {
         ...state,
         ...payload,
@@ -28,6 +31,7 @@ export default function (state = initialState, action) {
       };
     case FREE_COURSE_LOAD_FAILURE:
     case CREATE_WEBINAR_FAILURE:
+    case ADD_IMAGE_FAILURE:
       return {
         ...state,
         courses: [],

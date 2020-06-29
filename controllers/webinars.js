@@ -164,7 +164,7 @@ exports.deleteWebinar = async (req, res, next) => {
 };
 
 // @desc - Photo Upload for  webinar
-// @route - POST api/v1/ webinars/:id/photo
+// @route - POST api/v1/webinars/:id/photo
 // @access - Private
 exports.uploadPhoto = async (req, res, next) => {
   try {
