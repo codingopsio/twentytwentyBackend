@@ -4,7 +4,6 @@ import './CourseItem.css';
 import '../../img/Deno.jpg';
 import { connect } from 'react-redux';
 import { uploadImage } from './../../actions/course';
-import UpdateCourse from './../AdminComponents/UpdateCourse/UpdateCourse';
 
 const CourseItem = ({
   photo,

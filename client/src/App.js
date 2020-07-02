@@ -19,6 +19,7 @@ import './App.css';
 import { Provider } from 'react-redux';
 import store from './store';
 import PrivateRoute from './routes/PrivateRoute';
+import AdminRoute from './routes/AdminRoute';
 
 const App = () => {
   useEffect(() => {
@@ -48,8 +49,13 @@ const App = () => {
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/courselist" component={CoursesList} />
             <PrivateRoute exact path="/useraccount" component={UserAccount} />
-            <Route exact path="/addcourse" component={AddCourse} />
-            <Route exact path="/updatecourse/:id" component={UpdateCourse} />
+
+            <AdminRoute exact path="/addcourse" component={AddCourse} />
+            <AdminRoute
+              exact
+              path="/updatecourse/:id"
+              component={UpdateCourse}
+            />
           </Switch>
         </Fragment>
       </Router>

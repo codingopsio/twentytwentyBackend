@@ -5,6 +5,8 @@ import {
   CREATE_WEBINAR_FAILURE,
   ADD_IMAGE_SUCCESS,
   ADD_IMAGE_FAILURE,
+  UPDATE_WEBINAR_SUCCESS,
+  UPDATE_WEBINAR_FAILURE,
 } from '../actions/types';
 import axios from 'axios';
 
@@ -115,6 +117,7 @@ export const updateWebinar = ({
   CourseStructure,
   ManageTopics,
   difficulty,
+  id,
 }) => async (dispatch) => {
   const config = {
     headers: {
@@ -134,17 +137,19 @@ export const updateWebinar = ({
   });
 
   try {
-    const response = await axios.put('/api/v1/webinars', body, config);
+    const response = await axios.put(`/api/v1/webinars/${id}`, body, config);
 
     dispatch({
-      type: CREATE_WEBINAR_SUCCESS,
+      type: UPDATE_WEBINAR_SUCCESS,
       payload: response.data,
     });
 
     dispatch(getAllWebinars());
   } catch (err) {
     dispatch({
-      type: CREATE_WEBINAR_FAILURE,
+      type: UPDATE_WEBINAR_FAILURE,
     });
+
+    return err;
   }
 };

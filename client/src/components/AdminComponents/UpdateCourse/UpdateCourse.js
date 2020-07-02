@@ -3,7 +3,7 @@ import { updateWebinar } from '../../../actions/course';
 import { connect } from 'react-redux';
 import './UpdateCourse.css';
 
-const UpdateCourse = ({ updateWebinar }) => {
+const UpdateCourse = ({ updateWebinar, match, auth }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -16,6 +16,8 @@ const UpdateCourse = ({ updateWebinar }) => {
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState('');
 
+  console.log(auth.user);
+
   const handleChange = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,8 +27,8 @@ const UpdateCourse = ({ updateWebinar }) => {
     e.preventDefault();
     setMsg('');
     setLoading(true);
-
-    await updateWebinar(formData);
+    let obj = { ...formData, id: match.params.id };
+    await updateWebinar(obj);
 
     setMsg('Webinar Updated');
     setLoading(false);
@@ -137,4 +139,10 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(UpdateCourse);
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateCourse);
