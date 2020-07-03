@@ -16,8 +16,6 @@ const UpdateCourse = ({ updateWebinar, match, auth }) => {
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState('');
 
-  console.log(auth.user);
-
   const handleChange = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
