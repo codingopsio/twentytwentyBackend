@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Header.css';
-import { connect } from 'react-redux';
-import { PropTypes } from 'prop-types';
-import { logout } from '../../actions/auth';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Header.css";
+import { connect } from "react-redux";
+import { PropTypes } from "prop-types";
+import { logout } from "../../actions/auth";
 
 const Header = ({ isAuthenticated, logout }) => {
   return (
@@ -12,7 +12,7 @@ const Header = ({ isAuthenticated, logout }) => {
         <nav className="main-nav">
           <Link to="/">
             <img
-              src={require('../../img/logo-bookmark.svg')}
+              src={require("../../img/logo-bookmark.svg")}
               alt="page-logo"
               className="logo"
             />
@@ -30,7 +30,7 @@ const Header = ({ isAuthenticated, logout }) => {
                 <li>
                   <Link to="/useraccount">
                     <i className="fas fa-user-alt"></i>
-                    {'  '} Account
+                    {"  "} Account
                   </Link>
                 </li>
                 <input

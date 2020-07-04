@@ -1,5 +1,5 @@
-const ErrorResponse = require('../utils/errorResponse');
-const Webinar = require('../models/Webinar');
+const ErrorResponse = require("../utils/errorResponse");
+const Webinar = require("../models/Webinar");
 
 // @desc - Get all webinars
 // @route - GET api/v1/ webinars
@@ -15,7 +15,7 @@ exports.getWebinars = async (req, res, next) => {
     // For pagination, If **select** is present in the query, then deleting that
     if (req.query.select) {
       const selectFieldDelete = delete queryString.select;
-      fields = req.query.select.split(',').join(' ');
+      fields = req.query.select.split(",").join(" ");
     }
 
     // For pagination, If **page** is present in the query, then deleting that
@@ -32,7 +32,7 @@ exports.getWebinars = async (req, res, next) => {
 
     // Filtering for category - eg: Fullstack, Frontend, Nodejs
     let query = JSON.stringify(queryString);
-    query = query.replace('in', '$in');
+    query = query.replace("in", "$in");
 
     //  Pagination Logic
     const page = parseInt(req.query.page, 10) || 1;
@@ -78,8 +78,8 @@ exports.getWebinars = async (req, res, next) => {
 exports.getWebinar = async (req, res, next) => {
   try {
     const webinar = await Webinar.findById(req.params.id)
-      .populate('questions')
-      .populate('reviews');
+      .populate("questions")
+      .populate("reviews");
 
     if (!webinar) {
       return next(
@@ -137,7 +137,7 @@ exports.updateWebinar = async (req, res, next) => {
 };
 
 // @desc - Delete a webinar
-// @route - DELETE api/v1/ webinars/:id
+// @route - DELETE api/v1/webinars/:id
 // @access - Private
 exports.deleteWebinar = async (req, res, next) => {
   try {
@@ -154,9 +154,11 @@ exports.deleteWebinar = async (req, res, next) => {
 
     webinar.remove();
 
+    let newWebinars = await Webinar.find();
+
     res.status(200).json({
       success: true,
-      data: {},
+      data: newWebinars,
     });
   } catch (err) {
     next(err);
@@ -181,7 +183,7 @@ exports.uploadPhoto = async (req, res, next) => {
 
     const file = req.files.file;
 
-    if (!file.mimetype.startsWith('image')) {
+    if (!file.mimetype.startsWith("image")) {
       return next(
         new ErrorResponse(`Error in uploading file ${file.name}`, 400)
       );

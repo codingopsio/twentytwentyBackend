@@ -7,7 +7,9 @@ import {
   ADD_IMAGE_FAILURE,
   UPDATE_WEBINAR_SUCCESS,
   UPDATE_WEBINAR_FAILURE,
-} from '../actions/types';
+  DELETE_WEBINAR_SUCCESS,
+  DELETE_WEBINAR_FAILURE,
+} from "../actions/types";
 
 const initialState = {
   courses: [],
@@ -32,10 +34,17 @@ export default function (state = initialState, action) {
         ...payload,
         loading: false,
       };
+    case DELETE_WEBINAR_SUCCESS:
+      return {
+        ...state,
+        ...payload,
+        loading: false,
+      };
     case FREE_COURSE_LOAD_FAILURE:
     case CREATE_WEBINAR_FAILURE:
     case ADD_IMAGE_FAILURE:
     case UPDATE_WEBINAR_FAILURE:
+    case DELETE_WEBINAR_FAILURE:
       return {
         ...state,
         courses: [],
