@@ -13,6 +13,7 @@ import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
 import AddCourse from './components/AdminComponents/AddCourse/AddCourse';
 import UpdateCourse from './components/AdminComponents/UpdateCourse/UpdateCourse';
+import CourseDetails from './pages/CourseDetails/CourseDetails';
 import './App.css';
 
 // Redux
@@ -49,6 +50,11 @@ const App = () => {
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/courselist" component={CoursesList} />
             <PrivateRoute exact path="/useraccount" component={UserAccount} />
+            <PrivateRoute
+              exact
+              path="/coursedetail"
+              component={CourseDetails}
+            />
 
             <AdminRoute exact path="/addcourse" component={AddCourse} />
             <AdminRoute
