@@ -14,6 +14,7 @@ const CourseItem = ({
   id,
   uploadImage,
   deleteWebinar,
+  user,
 }) => {
   const [data, setData] = useState({
     image: "",
@@ -46,25 +47,39 @@ const CourseItem = ({
         <small>{title}</small>
         <span>{description.split(" ").slice(0, 13).join(" ") + " ..."}</span>
         <p>{plan.toUpperCase()}</p>
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <input type="file" name="myfile" onChange={(e) => handleChange(e)} />
-          <input type="submit" value="upload image" />
-        </form>
-        <button
-          style={{ position: "absolute", bottom: "19px", right: "150px" }}
-          onClick={(e) => handleDelete(e)}
-        >
-          Delete Webinar
-        </button>
-        <Link
-          style={{ position: "absolute", bottom: "19px", right: "20px" }}
-          to={`updatecourse/${id}`}
-        >
-          Update Webinar
-        </Link>
+        {user.role === "admin" ? (
+          <>
+            <form onSubmit={(e) => handleSubmit(e)}>
+              <input
+                type="file"
+                name="myfile"
+                onChange={(e) => handleChange(e)}
+              />
+              <input type="submit" value="upload image" />
+            </form>
+            <button
+              style={{ position: "absolute", bottom: "19px", right: "150px" }}
+              onClick={(e) => handleDelete(e)}
+            >
+              Delete Webinar
+            </button>
+            <Link
+              style={{ position: "absolute", bottom: "19px", right: "20px" }}
+              to={`updatecourse/${id}`}
+            >
+              Update Webinar
+            </Link>
+          </>
+        ) : null}
       </div>
     </>
   );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -74,4 +89,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(CourseItem);
+export default connect(mapStateToProps, mapDispatchToProps)(CourseItem);

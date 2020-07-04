@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { logout } from "../../actions/auth";
 
-const Header = ({ isAuthenticated, logout }) => {
+const Header = ({ isAuthenticated, logout, auth }) => {
   return (
     <React.Fragment>
       <div className="container">
@@ -24,21 +24,61 @@ const Header = ({ isAuthenticated, logout }) => {
 
             {isAuthenticated ? (
               <>
-                <li>
-                  <Link to="/dashboard">Webinars</Link>
-                </li>
-                <li>
-                  <Link to="/useraccount">
-                    <i className="fas fa-user-alt"></i>
-                    {"  "} Account
-                  </Link>
-                </li>
-                <input
-                  type="submit"
-                  className="btn-red"
-                  value="Logout"
-                  onClick={() => logout()}
-                />
+                {auth.user === null || auth.loading ? (
+                  <img
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                    }}
+                    src={require("../../img/Rolling-1s-200px.gif")}
+                    alt="spinner"
+                  />
+                ) : (
+                  <>
+                    {auth.user.role === "admin" ? (
+                      <>
+                        <li>
+                          <Link to="/dashboard">Webinars</Link>
+                        </li>
+                        <li>
+                          <Link to="/addcourse">Addcourse</Link>
+                        </li>
+                        <li>
+                          <Link to="/useraccount">
+                            <i className="fas fa-user-alt"></i>
+                            {"  "} Account
+                          </Link>
+                        </li>
+                        <input
+                          type="submit"
+                          className="btn-red"
+                          value="Logout"
+                          onClick={() => logout()}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <li>
+                          <Link to="/dashboard">Webinars</Link>
+                        </li>
+                        <li>
+                          <Link to="/useraccount">
+                            <i className="fas fa-user-alt"></i>
+                            {"  "} Account
+                          </Link>
+                        </li>
+                        <input
+                          type="submit"
+                          className="btn-red"
+                          value="Logout"
+                          onClick={() => logout()}
+                        />
+                      </>
+                    )}
+                  </>
+                )}
               </>
             ) : (
               <>
@@ -64,6 +104,7 @@ Header.propTypes = {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
+    auth: state.auth,
   };
 };
 
