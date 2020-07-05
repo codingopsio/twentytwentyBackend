@@ -9,6 +9,8 @@ import {
   UPDATE_WEBINAR_FAILURE,
   DELETE_WEBINAR_SUCCESS,
   DELETE_WEBINAR_FAILURE,
+  GET_SINGLE_WEBINAR_SUCCESS,
+  GET_SINGLE_WEBINAR_FAILURE,
 } from "../actions/types";
 import axios from "axios";
 
@@ -25,6 +27,24 @@ export const getAllWebinars = (param = "") => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: FREE_COURSE_LOAD_FAILURE,
+    });
+  }
+};
+
+// For loading single webinar
+// @access: Public
+export const getSingleWebinar = (id) => async (dispatch) => {
+  try {
+    let response = await axios.get(`/api/v1/webinars/${id}`);
+
+    console.log(response.data);
+    dispatch({
+      type: GET_SINGLE_WEBINAR_SUCCESS,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_SINGLE_WEBINAR_FAILURE,
     });
   }
 };

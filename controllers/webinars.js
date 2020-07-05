@@ -2,7 +2,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const Webinar = require("../models/Webinar");
 
 // @desc - Get all webinars
-// @route - GET api/v1/ webinars
+// @route - GET api/v1/webinars
 // @access - Public
 exports.getWebinars = async (req, res, next) => {
   try {
@@ -73,7 +73,7 @@ exports.getWebinars = async (req, res, next) => {
 };
 
 // @desc - Get single webinar
-// @route - GET api/v1/ webinars/:id
+// @route - GET api/v1/webinars/:id
 // @access - Public
 exports.getWebinar = async (req, res, next) => {
   try {
@@ -97,7 +97,7 @@ exports.getWebinar = async (req, res, next) => {
 };
 
 // @desc - Create a webinar
-// @route - POST api/v1/ webinars
+// @route - POST api/v1/webinars
 // @access - Private
 exports.createWebinar = async (req, res, next) => {
   try {
@@ -110,7 +110,7 @@ exports.createWebinar = async (req, res, next) => {
 };
 
 // @desc - Update a webinar
-// @route - PUT api/v1/ webinars/:id
+// @route - PUT api/v1/webinars/:id
 // @access - Private
 exports.updateWebinar = async (req, res, next) => {
   try {

@@ -9,10 +9,13 @@ import {
   UPDATE_WEBINAR_FAILURE,
   DELETE_WEBINAR_SUCCESS,
   DELETE_WEBINAR_FAILURE,
+  GET_SINGLE_WEBINAR_SUCCESS,
+  GET_SINGLE_WEBINAR_FAILURE,
 } from "../actions/types";
 
 const initialState = {
   courses: [],
+  singleWebinar: {},
   loading: true,
 };
 
@@ -40,11 +43,19 @@ export default function (state = initialState, action) {
         ...payload,
         loading: false,
       };
+
+    case GET_SINGLE_WEBINAR_SUCCESS:
+      return {
+        ...state,
+        singleWebinar: payload.data,
+        loading: false,
+      };
     case FREE_COURSE_LOAD_FAILURE:
     case CREATE_WEBINAR_FAILURE:
     case ADD_IMAGE_FAILURE:
     case UPDATE_WEBINAR_FAILURE:
     case DELETE_WEBINAR_FAILURE:
+    case GET_SINGLE_WEBINAR_FAILURE:
       return {
         ...state,
         courses: [],
