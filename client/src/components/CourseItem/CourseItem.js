@@ -44,9 +44,11 @@ const CourseItem = ({
   const handleClick = async (e) => {
     e.preventDefault();
     console.log(id);
-    getSingleWebinar(id);
+    if (user.role !== "admin") {
+      getSingleWebinar(id);
 
-    history.push("/coursedetail");
+      history.push("/coursedetail");
+    }
   };
 
   return (
