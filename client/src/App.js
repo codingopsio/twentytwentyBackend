@@ -14,6 +14,7 @@ import ResetPassword from './pages/ResetPassword/ResetPassword';
 import AddCourse from './components/AdminComponents/AddCourse/AddCourse';
 import UpdateCourse from './components/AdminComponents/UpdateCourse/UpdateCourse';
 import CourseDetails from './pages/CourseDetails/CourseDetails';
+import Discussions from './pages/Discussions/Discussions';
 import './App.css';
 
 // Redux
@@ -52,9 +53,10 @@ const App = () => {
             <PrivateRoute exact path="/useraccount" component={UserAccount} />
             <PrivateRoute
               exact
-              path="/coursedetail"
+              path="/coursedetail/:id"
               component={CourseDetails}
             />
+            <PrivateRoute exact path="/discussions" component={Discussions} />
 
             <AdminRoute exact path="/addcourse" component={AddCourse} />
             <AdminRoute

@@ -11,12 +11,12 @@ import {
   DELETE_WEBINAR_FAILURE,
   GET_SINGLE_WEBINAR_SUCCESS,
   GET_SINGLE_WEBINAR_FAILURE,
-} from "../actions/types";
-import axios from "axios";
+} from '../actions/types';
+import axios from 'axios';
 
 // For loading all webinars
 // @access: Public
-export const getAllWebinars = (param = "") => async (dispatch) => {
+export const getAllWebinars = (param = '') => async (dispatch) => {
   try {
     let response = await axios.get(`/api/v1/webinars?${param}`);
 
@@ -37,7 +37,6 @@ export const getSingleWebinar = (id) => async (dispatch) => {
   try {
     let response = await axios.get(`/api/v1/webinars/${id}`);
 
-    console.log(response.data);
     dispatch({
       type: GET_SINGLE_WEBINAR_SUCCESS,
       payload: response.data,
@@ -62,7 +61,7 @@ export const createWebinar = ({
 }) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "Application/json",
+      'Content-Type': 'Application/json',
       Authorization: `Bearer ${localStorage.token}`,
     },
   };
@@ -72,13 +71,13 @@ export const createWebinar = ({
     description,
     time,
     plan,
-    CourseStructure: CourseStructure.split(","),
-    ManageTopics: ManageTopics.split(","),
+    CourseStructure: CourseStructure.split(','),
+    ManageTopics: ManageTopics.split(','),
     difficulty,
   });
 
   try {
-    const response = await axios.post("/api/v1/webinars", body, config);
+    const response = await axios.post('/api/v1/webinars', body, config);
 
     dispatch({
       type: CREATE_WEBINAR_SUCCESS,
@@ -100,12 +99,12 @@ export const uploadImage = (data) => async (dispatch) => {
 
   const config = {
     headers: {
-      "Content-Type": "multipart/form-data",
+      'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${localStorage.token}`,
     },
   };
   let formData = new FormData();
-  formData.append("file", data.image);
+  formData.append('file', data.image);
 
   try {
     const response = await axios.post(
@@ -143,7 +142,7 @@ export const updateWebinar = ({
 }) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "Application/json",
+      'Content-Type': 'Application/json',
       Authorization: `Bearer ${localStorage.token}`,
     },
   };
@@ -153,8 +152,8 @@ export const updateWebinar = ({
     description,
     time,
     plan,
-    CourseStructure: CourseStructure.split(","),
-    ManageTopics: ManageTopics.split(","),
+    CourseStructure: CourseStructure.split(','),
+    ManageTopics: ManageTopics.split(','),
     difficulty,
   });
 
@@ -180,7 +179,7 @@ export const updateWebinar = ({
 export const deleteWebinar = (id) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "Application/json",
+      'Content-Type': 'Application/json',
       Authorization: `Bearer ${localStorage.token}`,
     },
   };

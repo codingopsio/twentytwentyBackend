@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
-import { updateWebinar } from '../../../actions/course';
+import React, { useState, useEffect } from 'react';
+import {
+  updateWebinar,
+  uploadImage,
+  getSingleWebinar,
+} from '../../../actions/course';
 import { connect } from 'react-redux';
 import './UpdateCourse.css';
 
-const UpdateCourse = ({ updateWebinar, match, auth }) => {
+const UpdateCourse = ({
+  updateWebinar,
+  uploadImage,
+  getSingleWebinar,
+  match,
+  auth,
+  singleWebinar,
+}) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -12,13 +23,24 @@ const UpdateCourse = ({ updateWebinar, match, auth }) => {
     CourseStructure: '',
     ManageTopics: '',
     difficulty: '',
+    image: '',
+    id: '',
   });
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState('');
 
+  useEffect(() => {
+    getSingleWebinar(match.params.id);
+  }, []);
+
   const handleChange = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e) => {
+    console.log(e.target.files);
+    setFormData({ ...formData, image: e.target.files[0], id: match.params.id });
   };
 
   const handleSubmit = async (e) => {
@@ -27,6 +49,7 @@ const UpdateCourse = ({ updateWebinar, match, auth }) => {
     setLoading(true);
     let obj = { ...formData, id: match.params.id };
     await updateWebinar(obj);
+    await uploadImage({ image: formData.image, id: formData.id });
 
     setMsg('Webinar Updated');
     setLoading(false);
@@ -39,6 +62,8 @@ const UpdateCourse = ({ updateWebinar, match, auth }) => {
       CourseStructure: '',
       ManageTopics: '',
       difficulty: '',
+      image: '',
+      id: '',
     });
   };
 
@@ -64,7 +89,7 @@ const UpdateCourse = ({ updateWebinar, match, auth }) => {
                 className="form-feild"
                 placeholder="Title"
                 onChange={(e) => handleChange(e)}
-                value={formData.title}
+                value={formData.title ? formData.title : singleWebinar.title}
               />
               <input
                 name="description"
@@ -72,7 +97,11 @@ const UpdateCourse = ({ updateWebinar, match, auth }) => {
                 className="form-feild"
                 placeholder="Description"
                 onChange={(e) => handleChange(e)}
-                value={formData.description}
+                value={
+                  formData.description
+                    ? formData.description
+                    : singleWebinar.description
+                }
               />
               <input
                 name="time"
@@ -80,13 +109,14 @@ const UpdateCourse = ({ updateWebinar, match, auth }) => {
                 className="form-feild"
                 placeholder="Total time of this course,  eg: 01:20"
                 onChange={(e) => handleChange(e)}
-                value={formData.time}
+                value={formData.time ? formData.time : singleWebinar.time}
               />
               <select
                 name="plan"
                 type="text"
                 className="form-feild"
-                onChange={(e) => handleChange(e)}>
+                onChange={(e) => handleChange(e)}
+                value={formData.plan ? formData.plan : singleWebinar.plan}>
                 <option>Select Plan</option>
                 <option value="Free">Free</option>
                 <option value="Paid">Paid</option>
@@ -97,7 +127,13 @@ const UpdateCourse = ({ updateWebinar, match, auth }) => {
                 placeholder="Course Structure, eg: Css Basics, Node Basics etc.. "
                 name="CourseStructure"
                 onChange={(e) => handleChange(e)}
-                value={formData.coursestructure}
+                value={
+                  formData.CourseStructure
+                    ? formData.CourseStructure
+                    : singleWebinar.CourseStructure
+                    ? singleWebinar.CourseStructure.join(',')
+                    : ''
+                }
               />
               <input
                 type="text"
@@ -105,18 +141,36 @@ const UpdateCourse = ({ updateWebinar, match, auth }) => {
                 placeholder="Manage Topics,  eg: Css, Backend, Python etc.."
                 name="ManageTopics"
                 onChange={(e) => handleChange(e)}
-                value={formData.managetopics}
+                value={
+                  formData.ManageTopics
+                    ? formData.ManageTopics
+                    : singleWebinar.ManageTopics
+                    ? singleWebinar.ManageTopics.join(',')
+                    : ''
+                }
               />
               <select
                 name="difficulty"
                 type="text"
                 className="form-feild"
-                onChange={(e) => handleChange(e)}>
-                <option>Select Difficulty</option>
+                onChange={(e) => handleChange(e)}
+                value={
+                  formData.difficulty
+                    ? formData.difficulty
+                    : singleWebinar.difficulty
+                }>
+                <option>Select Plan</option>
                 <option value="Beginner">Beginner</option>
                 <option value="Intermediate">Intermediate</option>
                 <option value="Advanced">Advanced</option>
               </select>
+
+              <input
+                type="file"
+                id="myfile"
+                name="myfile"
+                onChange={(e) => handleFileChange(e)}
+              />
 
               {msg ? <span className="reserror">{msg}</span> : null}
 
@@ -134,12 +188,15 @@ const UpdateCourse = ({ updateWebinar, match, auth }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateWebinar: (data) => dispatch(updateWebinar(data)),
+    uploadImage: (data) => dispatch(uploadImage(data)),
+    getSingleWebinar: (id) => dispatch(getSingleWebinar(id)),
   };
 };
 
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
+    singleWebinar: state.course.singleWebinar,
   };
 };
 

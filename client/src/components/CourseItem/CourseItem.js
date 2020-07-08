@@ -1,13 +1,9 @@
-import React, { useState } from "react";
-import { Link, Redirect, withRouter } from "react-router-dom";
-import "./CourseItem.css";
-import "../../img/Deno.jpg";
-import { connect } from "react-redux";
-import {
-  uploadImage,
-  deleteWebinar,
-  getSingleWebinar,
-} from "./../../actions/course";
+import React, { useState } from 'react';
+import { Link, Redirect, withRouter } from 'react-router-dom';
+import './CourseItem.css';
+import '../../img/Deno.jpg';
+import { connect } from 'react-redux';
+import { deleteWebinar, getSingleWebinar } from './../../actions/course';
 
 const CourseItem = ({
   photo,
@@ -16,26 +12,11 @@ const CourseItem = ({
   plan,
   difficulty,
   id,
-  uploadImage,
   deleteWebinar,
   getSingleWebinar,
   user,
   history,
 }) => {
-  const [data, setData] = useState({
-    image: "",
-    id: "",
-  });
-
-  const handleChange = (e) => {
-    setData({ ...data, image: e.target.files[0], id: id });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    uploadImage(data);
-  };
-
   const handleDelete = (e) => {
     e.preventDefault();
     deleteWebinar(id);
@@ -43,11 +24,10 @@ const CourseItem = ({
 
   const handleClick = async (e) => {
     e.preventDefault();
-    console.log(id);
-    if (user.role !== "admin") {
+    if (user.role !== 'admin') {
       getSingleWebinar(id);
 
-      history.push("/coursedetail");
+      history.push(`/coursedetail/${id}`);
     }
   };
 
@@ -55,34 +35,24 @@ const CourseItem = ({
     <>
       <div className="card" onClick={(e) => handleClick(e)}>
         <div className="easy-tag">{difficulty}</div>
-        {photo === "no-photo.jpg" ? (
-          <img src={require("../../img/Deno.jpg")} alt="card" />
+        {photo === 'no-photo.jpg' ? (
+          <img src={require('../../img/Deno.jpg')} alt="card" />
         ) : (
           <img src={`/uploads/${photo}`} alt="card" />
         )}
         <small>{title}</small>
-        <span>{description.split(" ").slice(0, 13).join(" ") + " ..."}</span>
+        <span>{description.split(' ').slice(0, 13).join(' ') + ' ...'}</span>
         <p>{plan.toUpperCase()}</p>
-        {user.role === "admin" ? (
+        {user.role === 'admin' ? (
           <>
-            <form onSubmit={(e) => handleSubmit(e)}>
-              <input
-                type="file"
-                name="myfile"
-                onChange={(e) => handleChange(e)}
-              />
-              <input type="submit" value="upload image" />
-            </form>
             <button
-              style={{ position: "absolute", bottom: "19px", right: "150px" }}
-              onClick={(e) => handleDelete(e)}
-            >
+              style={{ position: 'absolute', bottom: '19px', right: '150px' }}
+              onClick={(e) => handleDelete(e)}>
               Delete Webinar
             </button>
             <Link
-              style={{ position: "absolute", bottom: "19px", right: "20px" }}
-              to={`updatecourse/${id}`}
-            >
+              style={{ position: 'absolute', bottom: '19px', right: '20px' }}
+              to={`updatecourse/${id}`}>
               Update Webinar
             </Link>
           </>
@@ -100,7 +70,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    uploadImage: (data) => dispatch(uploadImage(data)),
     deleteWebinar: (id) => dispatch(deleteWebinar(id)),
     getSingleWebinar: (id) => dispatch(getSingleWebinar(id)),
   };
