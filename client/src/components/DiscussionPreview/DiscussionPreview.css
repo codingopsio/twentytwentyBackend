@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.discussion-container {
+	max-width: 700px;
+	margin: 2.4rem auto;
+	display: grid;
+	grid-template-columns: 1fr;
+}
+
+.discussion-container .heading {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 35px;
+	padding: 0 20px;
+	color: #040457;
+	font-family: 'Roboto', sans-serif;
+	letter-spacing: 1.1px;
+	font-size: 22.4px;
+}
+
+.discussion-container .heading .btn-ask-question {
+	padding: 0.8rem 1.26rem;
+	border-radius: 18px;
+	border: none;
+	background-color: #7A17CE;
+	color: white;
+}
+
+.discussion-container .heading .btn-ask-question:hover {
+	cursor: pointer;
+	background-color: #882ed6;
+}
+
+.discussion-container .heading .btn-ask-question:focus {
+	outline: none;
+}

@@ -55,7 +55,7 @@ const CourseDetail = ({ singleWebinar, getSingleWebinar, history, match }) => {
                   <React.Fragment key={`item-${i}`}>
                     <div className="box">
                       <h2>
-                        <span>01</span> {el ? el : 'hi'}
+                        <span>0{i + 1}</span> {el ? el : 'hi'}
                       </h2>
                     </div>
                   </React.Fragment>
@@ -113,7 +113,7 @@ const CourseDetail = ({ singleWebinar, getSingleWebinar, history, match }) => {
                   e.preventDefault();
                   history.push('/discussions');
                 }}>
-                All Discussions
+                All Discussion
               </p>
             </div>
           </section>

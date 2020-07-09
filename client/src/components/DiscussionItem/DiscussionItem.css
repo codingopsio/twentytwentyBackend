@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+
+.discussion-card {
+	padding: 2.2rem 20px;
+	border-bottom: 1.2px solid #ccc;
+}
+
+.discussion-card:hover {
+	background-color: hsla(297, 78%, 35%, 0.07);
+	cursor: pointer;
+}
+
+.discussion-card .header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 40px;
+}
+
+.discussion-card .header .user-logo {
+	margin-right: 20px;
+	height: 65px;
+	width: 65px;
+	background-color: #0074d9;
+	border-radius: 50px;
+	position: relative;
+}
+
+.discussion-card .header .user-logo span {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 24px;
+	font-weight: 600;
+	color: white;
+}
+
+.discussion-card .header .main-head {
+	letter-spacing: 1.2px;
+}
+
+.discussion-card .header .main-head h2 {
+	font-weight: 500;
+	margin-bottom: 5px;
+}
+
+.discussion-card .header .main-head p {
+	display: inline-block;
+	margin-right: 60px;
+	color: grey;
+}
+
+.discussion-card .header .main-head span {
+	font-size: 13.4px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 600;
+	color: #356194;
+}
+
+.discussion-card .description {
+	font-size: 14.6px;
+	font-family: 'Roboto', sans-serif;
+	letter-spacing: 1.1px;
+}
