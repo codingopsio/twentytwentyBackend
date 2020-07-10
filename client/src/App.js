@@ -56,7 +56,11 @@ const App = () => {
               path="/coursedetail/:id"
               component={CourseDetails}
             />
-            <PrivateRoute exact path="/discussions" component={Discussions} />
+            <PrivateRoute
+              exact
+              path="/discussions/:id"
+              component={Discussions}
+            />
 
             <AdminRoute exact path="/addcourse" component={AddCourse} />
             <AdminRoute

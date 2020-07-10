@@ -328,7 +328,7 @@ exports.replyQuestion = async (req, res, next) => {
   }
 };
 
-// @desc - Deleting  question
+// @desc - Deleting  reply
 // @route - DELETE api/v1/ questions/:questionId/:replyId
 // @access - Private
 exports.deleteReply = async (req, res, next) => {

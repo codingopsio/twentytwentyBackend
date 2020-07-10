@@ -111,7 +111,7 @@ const CourseDetail = ({ singleWebinar, getSingleWebinar, history, match }) => {
                 style={{ letterSpacing: '1.4px' }}
                 onClick={(e) => {
                   e.preventDefault();
-                  history.push('/discussions');
+                  history.push(`/discussions/${match.params.id}`);
                 }}>
                 All Discussion
               </p>

@@ -6,7 +6,6 @@ import { PropTypes } from 'prop-types';
 import { logout } from '../../actions/auth';
 
 const Header = ({ isAuthenticated, logout, auth, location }) => {
-  console.log(location);
   return (
     <React.Fragment>
       <div className="container">

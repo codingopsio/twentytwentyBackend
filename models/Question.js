@@ -4,7 +4,6 @@ const QuestionSchema = new mongoose.Schema({
   title: {
     type: String,
     trim: true,
-    required: [true, 'Please add a title'],
     maxlength: 80,
   },
   description: {
