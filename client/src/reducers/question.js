@@ -6,11 +6,12 @@ import {
   DELETE_QUESTION_SUCCESS,
   GET_SINGLE_QUESTION_SUCCESS,
   CREATE_QUESTION_ERROR,
-} from '../actions/types';
+  GET_SINGLE_QUESTION_FAILURE,
+} from "../actions/types";
 
 const initialState = {
   questions: [],
-  singleQuestion: {},
+  singleQuestion: null,
   loading: true,
 };
 
@@ -47,10 +48,11 @@ export default function (state = initialState, action) {
 
     case ALL_QUESTION_LOAD_ERROR:
     case CREATE_QUESTION_ERROR:
+    case GET_SINGLE_QUESTION_FAILURE:
       return {
         ...state,
         questions: [],
-        singleQuestion: {},
+        singleQuestion: null,
         loading: false,
       };
 

@@ -3,11 +3,12 @@ import {
   CREATE_QUESTION_SUCCESS,
   DELETE_QUESTION_SUCCESS,
   GET_SINGLE_QUESTION_SUCCESS,
+  GET_SINGLE_QUESTION_FAILURE,
   UPDATE_QUESTION_SUCCESS,
   ALL_QUESTION_LOAD_ERROR,
   CREATE_QUESTION_ERROR,
-} from './types';
-import axios from 'axios';
+} from "./types";
+import axios from "axios";
 
 // For loading all questions
 // @access: Private
@@ -35,6 +36,28 @@ export const getAllQuestions = (webinarId) => async (dispatch) => {
   }
 };
 
+// For loading single question
+// @access: Private
+export const getSingleQuestion = (questionId) => async (dispatch) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${localStorage.token}`,
+    },
+  };
+  try {
+    const response = await axios.get(`/api/v1/questions/${questionId}`, config);
+
+    dispatch({
+      type: GET_SINGLE_QUESTION_SUCCESS,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_SINGLE_QUESTION_FAILURE,
+    });
+  }
+};
+
 // For creating question
 // @access: Private
 export const createQuestion = ({ description, image, webinarId }) => async (
@@ -42,14 +65,14 @@ export const createQuestion = ({ description, image, webinarId }) => async (
 ) => {
   const config = {
     headers: {
-      'Content-Type': 'multipart/form-data',
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${localStorage.token}`,
     },
   };
 
   let formData = new FormData();
-  formData.append('file', image);
-  formData.append('description', description);
+  formData.append("file", image);
+  formData.append("description", description);
 
   try {
     const response = await axios.post(
