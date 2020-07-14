@@ -1,0 +1,27 @@
+.discussion-container {
+	max-width: 700px;
+	margin: 2.4rem auto;
+	display: grid;
+	grid-template-columns: 1fr;
+	position: relative;
+}
+
+.discussion-container .btn-reply {
+	position: absolute;
+	right: 40px;
+	bottom: -50px;
+	padding: 0.7rem 1rem;
+	background-color: #7A17CE;
+	outline: none;
+	border: none;
+	color: white;
+	font-weight: bold;
+	border-radius: 20px;
+	letter-spacing: 1.1px;
+}
+
+
+.discussion-container .btn-reply:hover {
+	cursor: pointer;
+	background-color: #6610b1;
+}

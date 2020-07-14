@@ -63,3 +63,18 @@
 	font-family: 'Roboto', sans-serif;
 	letter-spacing: 1.1px;
 }
+
+.fa-trash-alt,
+.fa-edit {
+	margin-left: 20px;
+	margin-bottom: 10px;
+	font-size: 19px;
+	color: #0074d9;
+	transition: all 0.4s ease;
+}
+
+.fa-trash-alt:hover,
+.fa-edit:hover {
+	transform: scale(1.2);
+	cursor: pointer;
+}

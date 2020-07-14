@@ -5,11 +5,12 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { logout } from '../../actions/auth';
 
-const Header = ({ isAuthenticated, logout, auth, location }) => {
+const Header = ({ isAuthenticated, logout, auth, location, match }) => {
   return (
     <React.Fragment>
       <div className="container">
-        {location.pathname === '/discussions' ? (
+        {location.pathname.startsWith('/discussions') ||
+        location.pathname.startsWith('/question') ? (
           <nav className="course-nav">
             <Link to="/">
               <img
