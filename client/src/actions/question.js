@@ -8,6 +8,7 @@ import {
   UPDATE_QUESTION_SUCCESS,
   UPDATE_QUESTION_ERROR,
   DELETE_QUESTION_SUCCESS,
+  DELETE_QUESTION_ERROR,
 } from './types';
 import axios from 'axios';
 
@@ -130,5 +131,29 @@ export const updateQuestion = ({ description, image, questionId }) => async (
       type: UPDATE_QUESTION_ERROR,
     });
     return err;
+  }
+};
+
+export const deleteQuestion = (questionId) => async (dispatch) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${localStorage.token}`,
+    },
+  };
+
+  try {
+    const response = await axios.delete(
+      `/api/v1/questions/${questionId}`,
+      config
+    );
+
+    dispatch({
+      type: DELETE_QUESTION_SUCCESS,
+      payload: response.data,
+    });
+
+    dispatch(getSingleQuestion(questionId));
+  } catch (err) {
+    console.log(err);
   }
 };

@@ -25,3 +25,24 @@
 	cursor: pointer;
 	background-color: #6610b1;
 }
+
+
+
+.discussion-img {
+	width: 480px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.discussion-body {
+	position: absolute;
+	top: 75%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 28px;
+	letter-spacing: 1.1px;
+	font-weight: 600;
+	color: #595959;
+}

@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { getSingleQuestion, updateQuestion } from '../../actions/question';
+import {
+  getSingleQuestion,
+  updateQuestion,
+  deleteQuestion,
+} from '../../actions/question';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import DiscussionItem from '../DiscussionItem/DiscussionItem';
@@ -12,6 +16,7 @@ const SingleQuePreview = ({
   question,
   getSingleQuestion,
   updateQuestion,
+  deleteQuestion,
   match,
 }) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -42,6 +47,12 @@ const SingleQuePreview = ({
     onCloseEditModal();
   };
 
+  const dltQuestion = async (e) => {
+    e.preventDefault();
+    await deleteQuestion(match.params.questionId);
+    onCloseDeleteModal();
+  };
+
   const handleDeleteClick = (e) => {
     e.preventDefault();
     setDeleteModalOpen(true);
@@ -61,16 +72,14 @@ const SingleQuePreview = ({
   return (
     <>
       {question.singleQuestion === null ? (
-        <img
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
-          src={require('../../img/Rolling-1s-200px.gif')}
-          alt="spinner"
-        />
+        <>
+          <img
+            src={require('../../img/undraw_public_discussion_btnw.svg')}
+            alt="discussion"
+            className="discussion-img"
+          />
+          <h2 className="discussion-body">No discussions found</h2>
+        </>
       ) : (
         <>
           <div className="discussion-container">
@@ -110,6 +119,7 @@ const SingleQuePreview = ({
                 </h3>
                 <button
                   className="btn-delete"
+                  onClick={(e) => dltQuestion(e)}
                   style={{
                     position: 'absolute',
                     right: '0',
@@ -193,6 +203,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getSingleQuestion: (id) => dispatch(getSingleQuestion(id)),
     updateQuestion: (data) => dispatch(updateQuestion(data)),
+    deleteQuestion: (id) => dispatch(deleteQuestion(id)),
   };
 };
 

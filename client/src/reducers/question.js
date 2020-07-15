@@ -8,6 +8,7 @@ import {
   GET_SINGLE_QUESTION_SUCCESS,
   CREATE_QUESTION_ERROR,
   GET_SINGLE_QUESTION_FAILURE,
+  DELETE_QUESTION_ERROR,
 } from '../actions/types';
 
 const initialState = {
@@ -52,6 +53,7 @@ export default function (state = initialState, action) {
     case CREATE_QUESTION_ERROR:
     case GET_SINGLE_QUESTION_FAILURE:
     case UPDATE_QUESTION_ERROR:
+    case DELETE_QUESTION_ERROR:
       return {
         ...state,
         questions: [],
