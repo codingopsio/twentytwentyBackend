@@ -1,14 +1,15 @@
 import {
   ALL_QUESTION_LOAD_SUCCESS,
+  ALL_QUESTION_LOAD_ERROR,
   CREATE_QUESTION_SUCCESS,
-  DELETE_QUESTION_SUCCESS,
+  CREATE_QUESTION_ERROR,
   GET_SINGLE_QUESTION_SUCCESS,
   GET_SINGLE_QUESTION_FAILURE,
   UPDATE_QUESTION_SUCCESS,
-  ALL_QUESTION_LOAD_ERROR,
-  CREATE_QUESTION_ERROR,
-} from "./types";
-import axios from "axios";
+  UPDATE_QUESTION_ERROR,
+  DELETE_QUESTION_SUCCESS,
+} from './types';
+import axios from 'axios';
 
 // For loading all questions
 // @access: Private
@@ -65,14 +66,14 @@ export const createQuestion = ({ description, image, webinarId }) => async (
 ) => {
   const config = {
     headers: {
-      "Content-Type": "multipart/form-data",
+      'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${localStorage.token}`,
     },
   };
 
   let formData = new FormData();
-  formData.append("file", image);
-  formData.append("description", description);
+  formData.append('file', image);
+  formData.append('description', description);
 
   try {
     const response = await axios.post(
@@ -90,6 +91,43 @@ export const createQuestion = ({ description, image, webinarId }) => async (
   } catch (err) {
     dispatch({
       type: CREATE_QUESTION_ERROR,
+    });
+    return err;
+  }
+};
+
+// For updating question
+// @access: Private
+export const updateQuestion = ({ description, image, questionId }) => async (
+  dispatch
+) => {
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${localStorage.token}`,
+    },
+  };
+
+  let formData = new FormData();
+  formData.append('file', image);
+  formData.append('description', description);
+
+  try {
+    const response = await axios.put(
+      `/api/v1/questions/${questionId}`,
+      formData,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_QUESTION_SUCCESS,
+      payload: response.data,
+    });
+
+    dispatch(getSingleQuestion(questionId));
+  } catch (err) {
+    dispatch({
+      type: UPDATE_QUESTION_ERROR,
     });
     return err;
   }

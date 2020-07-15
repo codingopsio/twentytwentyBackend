@@ -3,11 +3,12 @@ import {
   ALL_QUESTION_LOAD_SUCCESS,
   CREATE_QUESTION_SUCCESS,
   UPDATE_QUESTION_SUCCESS,
+  UPDATE_QUESTION_ERROR,
   DELETE_QUESTION_SUCCESS,
   GET_SINGLE_QUESTION_SUCCESS,
   CREATE_QUESTION_ERROR,
   GET_SINGLE_QUESTION_FAILURE,
-} from "../actions/types";
+} from '../actions/types';
 
 const initialState = {
   questions: [],
@@ -32,6 +33,7 @@ export default function (state = initialState, action) {
         ...payload,
         loading: false,
       };
+
     case DELETE_QUESTION_SUCCESS:
       return {
         ...state,
@@ -49,6 +51,7 @@ export default function (state = initialState, action) {
     case ALL_QUESTION_LOAD_ERROR:
     case CREATE_QUESTION_ERROR:
     case GET_SINGLE_QUESTION_FAILURE:
+    case UPDATE_QUESTION_ERROR:
       return {
         ...state,
         questions: [],

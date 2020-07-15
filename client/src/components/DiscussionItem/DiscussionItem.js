@@ -19,14 +19,14 @@ const DiscussionItem = (props) => {
               <p>Stripe with react and Node crash course</p>
               <span>{moment(props.el.date).format('MMM Do YY')}</span>
             </div>
-            {props.handleDeleteClick ? (
+            {props.owner ? (
               <>
                 <div>
+                  <span onClick={props.handleEditClick}>
+                    <i className="far fa-edit"></i>
+                  </span>
                   <span onClick={props.handleDeleteClick}>
                     <i className="far fa-trash-alt"></i>
-                  </span>
-                  <span>
-                    <i className="far fa-edit"></i>
                   </span>
                 </div>
               </>

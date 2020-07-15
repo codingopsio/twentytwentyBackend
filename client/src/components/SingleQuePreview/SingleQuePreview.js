@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getSingleQuestion } from '../../actions/question';
+import { getSingleQuestion, updateQuestion } from '../../actions/question';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import DiscussionItem from '../DiscussionItem/DiscussionItem';
@@ -7,12 +7,40 @@ import './SingleQuePreview.css';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
 
-const SingleQuePreview = ({ question, getSingleQuestion, match }) => {
+const SingleQuePreview = ({
+  auth,
+  question,
+  getSingleQuestion,
+  updateQuestion,
+  match,
+}) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    description: '',
+    image: '',
+  });
   useEffect(() => {
     getSingleQuestion(match.params.questionId);
   }, []);
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e) => {
+    e.preventDefault();
+    setFormData({ ...formData, image: e.target.files[0] });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let obj = { ...formData, questionId: match.params.questionId };
+    await updateQuestion(obj);
+
+    onCloseEditModal();
+  };
 
   const handleDeleteClick = (e) => {
     e.preventDefault();
@@ -27,7 +55,7 @@ const SingleQuePreview = ({ question, getSingleQuestion, match }) => {
     setDeleteModalOpen(false);
   };
   const onCloseEditModal = () => {
-    setDeleteModalOpen(false);
+    setEditModalOpen(false);
   };
 
   return (
@@ -48,7 +76,13 @@ const SingleQuePreview = ({ question, getSingleQuestion, match }) => {
           <div className="discussion-container">
             <DiscussionItem
               el={question.singleQuestion}
+              owner={
+                auth.user._id === question.singleQuestion.user._id
+                  ? true
+                  : false
+              }
               handleDeleteClick={handleDeleteClick}
+              handleEditClick={handleEditClick}
             />
             <button className="btn-reply">
               <i className="fas fa-reply" style={{ marginRight: '6px' }}></i>{' '}
@@ -62,7 +96,7 @@ const SingleQuePreview = ({ question, getSingleQuestion, match }) => {
                   style={{
                     fontWeight: '500',
                     letterSpacing: '1.1px',
-                    marginBottom: '18px',
+                    marginBottom: '12px',
                   }}>
                   Delete Discussion
                 </h2>
@@ -97,7 +131,7 @@ const SingleQuePreview = ({ question, getSingleQuestion, match }) => {
             {/* Update Button Modal */}
             <Modal open={editModalOpen} onClose={onCloseEditModal} center>
               <h3 className="modal-title" style={{ padding: '0 1.2rem' }}>
-                All Discussion
+                Edit
               </h3>
               <form
                 style={{ padding: '2.2rem 1.2rem', position: 'relative' }}
@@ -150,6 +184,7 @@ const SingleQuePreview = ({ question, getSingleQuestion, match }) => {
 
 const mapStateToprops = (state) => {
   return {
+    auth: state.auth,
     question: state.question,
   };
 };
@@ -157,6 +192,7 @@ const mapStateToprops = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getSingleQuestion: (id) => dispatch(getSingleQuestion(id)),
+    updateQuestion: (data) => dispatch(updateQuestion(data)),
   };
 };
 

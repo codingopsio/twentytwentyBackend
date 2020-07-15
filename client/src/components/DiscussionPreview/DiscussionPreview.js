@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
-import DiscussionItem from "./../DiscussionItem/DiscussionItem";
-import "./DiscussionPreview.css";
-import "react-responsive-modal/styles.css";
-import { Modal } from "react-responsive-modal";
-import { connect } from "react-redux";
-import { createQuestion } from "../../actions/question";
+import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
+import DiscussionItem from './../DiscussionItem/DiscussionItem';
+import './DiscussionPreview.css';
+import 'react-responsive-modal/styles.css';
+import { Modal } from 'react-responsive-modal';
+import { connect } from 'react-redux';
+import { createQuestion } from '../../actions/question';
 
 const DiscussionPreview = ({ question, createQuestion, match, history }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState({
-    description: "",
-    image: "",
+    description: '',
+    image: '',
   });
 
   const handleChange = (e) => {
@@ -37,8 +37,8 @@ const DiscussionPreview = ({ question, createQuestion, match, history }) => {
   const onCloseModal = () => {
     setModalOpen(false);
     setFormData({
-      description: "",
-      image: "",
+      description: '',
+      image: '',
     });
   };
 
@@ -48,26 +48,26 @@ const DiscussionPreview = ({ question, createQuestion, match, history }) => {
         <div className="heading">
           <h3>All Discussion</h3>
           <button onClick={onOpenModal} className="btn-ask-question">
-            <i className="fas fa-plus" style={{ marginRight: "6px" }}></i> Ask
+            <i className="fas fa-plus" style={{ marginRight: '6px' }}></i> Ask
             Question
           </button>
         </div>
         {question.loading ? (
           <img
             style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
             }}
-            src={require("../../img/Rolling-1s-200px.gif")}
+            src={require('../../img/Rolling-1s-200px.gif')}
             alt="spinner"
           />
         ) : (
           <>
             {question.questions.length === 0 ? (
               <img
-                src={require("../../img/bot-new.gif")}
+                src={require('../../img/bot-new.gif')}
                 alt="bot"
                 className="questions-bot"
               />
@@ -86,13 +86,12 @@ const DiscussionPreview = ({ question, createQuestion, match, history }) => {
         )}
 
         <Modal open={modalOpen} onClose={onCloseModal} center>
-          <h3 className="modal-title" style={{ padding: "0 1.2rem" }}>
+          <h3 className="modal-title" style={{ padding: '0 1.2rem' }}>
             All Discussion
           </h3>
           <form
-            style={{ padding: "2.2rem 1.2rem", position: "relative" }}
-            onSubmit={(e) => handleSubmit(e)}
-          >
+            style={{ padding: '2.2rem 1.2rem', position: 'relative' }}
+            onSubmit={(e) => handleSubmit(e)}>
             <textarea
               name="description"
               rows="5"
@@ -100,20 +99,20 @@ const DiscussionPreview = ({ question, createQuestion, match, history }) => {
               placeholder="write something here..."
               onChange={(e) => handleChange(e)}
               style={{
-                cursor: "text",
-                padding: "0.5rem",
-                outline: "none",
+                cursor: 'text',
+                padding: '0.5rem',
+                outline: 'none',
                 fontFamily: " 'Roboto', sans-serif",
-                fontWeight: "500",
-                letterSpacing: "1.1px",
-                border: "1px solid #8a8686",
-                marginTop: "-18px",
+                fontWeight: '500',
+                letterSpacing: '1.1px',
+                border: '1px solid #8a8686',
+                marginTop: '-18px',
               }}
             />
 
             <div className="button-wrap">
               <label className="new-button" htmlFor="upload">
-                {" "}
+                {' '}
                 Attach a file
               </label>
               <input
