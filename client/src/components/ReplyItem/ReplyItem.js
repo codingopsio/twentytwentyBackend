@@ -1,21 +1,22 @@
 import React from 'react';
+import moment from 'moment';
 
-const ReplyItem = () => {
+const ReplyItem = (props) => {
   return (
     <>
       <div className="discussion-card">
         <div className="header">
           <div className="user-logo">
-            <span>logo</span>
+            <span>{props.el.user.name[0]}</span>
           </div>
           <div className="main-head">
-            <h2>name</h2>
+            <h2>{props.el.user.name}</h2>
             <p>Stripe with react and Node crash course</p>
-            <span>Date</span>
+            <span>{moment(props.el.date).format('MMM Do YY')}</span>
           </div>
         </div>
         <div className="description">
-          <p>description</p>
+          <p>{props.el.description}</p>
         </div>
       </div>
     </>

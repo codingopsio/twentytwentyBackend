@@ -46,7 +46,9 @@ const ReplyPreview = ({ createReply, question, match }) => {
   return (
     <>
       <div className="reply-preview-heading">
-        <h3>All Replies (2)</h3>
+        <h3>
+          All Replies <span>{question.singleQuestion.replies.length}</span>
+        </h3>
         <div>
           <button
             className="btn-reply"
@@ -59,7 +61,7 @@ const ReplyPreview = ({ createReply, question, match }) => {
         </div>
       </div>
       {question.singleQuestion.replies.reverse().map((el) => (
-        <ReplyItem />
+        <ReplyItem key={el._id} el={el} />
       ))}
 
       <Modal open={modalOpen} onClose={onCloseModal} center>
