@@ -1,0 +1,25 @@
+.reply-preview-heading {
+	padding: 1.6rem;
+	margin-top: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+
+.reply-preview-heading .btn-reply {
+	padding: 0.7rem 1rem;
+	background-color: #7A17CE;
+	outline: none;
+	border: none;
+	color: white;
+	font-weight: bold;
+	border-radius: 20px;
+	letter-spacing: 1.1px;
+}
+
+
+.reply-preview-heading .btn-reply:hover {
+	cursor: pointer;
+	background-color: #6610b1;
+}

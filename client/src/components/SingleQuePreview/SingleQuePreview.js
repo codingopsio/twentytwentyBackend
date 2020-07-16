@@ -10,6 +10,7 @@ import DiscussionItem from '../DiscussionItem/DiscussionItem';
 import './SingleQuePreview.css';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
+import ReplyPreview from './../ReplyPreview/ReplyPreview';
 
 const SingleQuePreview = ({
   auth,
@@ -44,6 +45,10 @@ const SingleQuePreview = ({
     let obj = { ...formData, questionId: match.params.questionId };
     await updateQuestion(obj);
 
+    setFormData({
+      description: '',
+      image: '',
+    });
     onCloseEditModal();
   };
 
@@ -93,10 +98,7 @@ const SingleQuePreview = ({
               handleDeleteClick={handleDeleteClick}
               handleEditClick={handleEditClick}
             />
-            <button className="btn-reply">
-              <i className="fas fa-reply" style={{ marginRight: '6px' }}></i>{' '}
-              Reply
-            </button>
+            <ReplyPreview />
 
             {/* Delete Button Modal */}
             <Modal open={deleteModalOpen} onClose={onCloseDeleteModal} center>
@@ -151,6 +153,9 @@ const SingleQuePreview = ({
                   rows="5"
                   cols="50"
                   placeholder="write something here..."
+                  value={
+                    formData.description || question.singleQuestion.description
+                  }
                   onChange={(e) => handleChange(e)}
                   style={{
                     cursor: 'text',

@@ -9,6 +9,8 @@ import {
   UPDATE_QUESTION_ERROR,
   DELETE_QUESTION_SUCCESS,
   DELETE_QUESTION_ERROR,
+  CREATE_REPLY_SUCCESS,
+  CREATE_REPLY_FAILURE,
 } from './types';
 import axios from 'axios';
 
@@ -134,6 +136,8 @@ export const updateQuestion = ({ description, image, questionId }) => async (
   }
 };
 
+// Deleting question
+// @access: Private
 export const deleteQuestion = (questionId) => async (dispatch) => {
   const config = {
     headers: {
@@ -154,6 +158,44 @@ export const deleteQuestion = (questionId) => async (dispatch) => {
 
     dispatch(getSingleQuestion(questionId));
   } catch (err) {
-    console.log(err);
+    dispatch({
+      type: DELETE_QUESTION_ERROR,
+    });
+  }
+};
+
+// Creating a reply
+// @access: Private
+export const createReply = ({ description, image, questionId }) => async (
+  dispatch
+) => {
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${localStorage.token}`,
+    },
+  };
+
+  let formData = new FormData();
+  formData.append('file', image);
+  formData.append('description', description);
+  try {
+    const response = await axios.post(
+      `/api/v1/questions/${questionId}`,
+      formData,
+      config
+    );
+
+    dispatch({
+      type: CREATE_REPLY_SUCCESS,
+      payload: response.data,
+    });
+
+    dispatch(getSingleQuestion(questionId));
+  } catch (err) {
+    dispatch({
+      type: CREATE_REPLY_FAILURE,
+    });
+    return err;
   }
 };
