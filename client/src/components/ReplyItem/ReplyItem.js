@@ -16,7 +16,7 @@ const ReplyItem = (props) => {
           </div>
 
           {props.owner ? (
-            <span>
+            <span onClick={() => props.onDeleteClick(props.el._id)}>
               <i className="far fa-trash-alt"></i>
             </span>
           ) : null}

@@ -11,6 +11,8 @@ import {
   DELETE_QUESTION_ERROR,
   CREATE_REPLY_SUCCESS,
   CREATE_REPLY_FAILURE,
+  DELETE_REPLY_SUCCESS,
+  DELETE_REPLY_FAILURE,
 } from './types';
 import axios from 'axios';
 
@@ -195,6 +197,35 @@ export const createReply = ({ description, image, questionId }) => async (
   } catch (err) {
     dispatch({
       type: CREATE_REPLY_FAILURE,
+    });
+    return err;
+  }
+};
+
+// For deleting reply
+// @access: Private
+export const deleteReply = (questionId, replyId) => async (dispatch) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${localStorage.token}`,
+    },
+  };
+
+  try {
+    const response = await axios.delete(
+      `/api/v1/questions/${questionId}/${replyId}`,
+      config
+    );
+
+    dispatch({
+      type: DELETE_REPLY_SUCCESS,
+      payload: response.data,
+    });
+
+    dispatch(getSingleQuestion(questionId));
+  } catch (err) {
+    dispatch({
+      type: DELETE_REPLY_FAILURE,
     });
     return err;
   }

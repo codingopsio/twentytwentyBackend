@@ -11,6 +11,8 @@ import {
   DELETE_QUESTION_ERROR,
   CREATE_REPLY_SUCCESS,
   CREATE_REPLY_FAILURE,
+  DELETE_REPLY_SUCCESS,
+  DELETE_REPLY_FAILURE,
 } from '../actions/types';
 
 const initialState = {
@@ -58,12 +60,20 @@ export default function (state = initialState, action) {
         loading: false,
       };
 
+    case DELETE_REPLY_SUCCESS:
+      return {
+        ...state,
+        ...payload,
+        loading: false,
+      };
+
     case ALL_QUESTION_LOAD_ERROR:
     case CREATE_QUESTION_ERROR:
     case GET_SINGLE_QUESTION_FAILURE:
     case UPDATE_QUESTION_ERROR:
     case DELETE_QUESTION_ERROR:
     case CREATE_REPLY_FAILURE:
+    case DELETE_REPLY_FAILURE:
       return {
         ...state,
         questions: [],

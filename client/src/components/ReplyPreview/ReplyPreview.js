@@ -5,9 +5,9 @@ import { withRouter } from 'react-router-dom';
 import './ReplyPreview.css';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
-import { createReply } from '../../actions/question';
+import { createReply, deleteReply } from '../../actions/question';
 
-const ReplyPreview = ({ createReply, auth, question, match }) => {
+const ReplyPreview = ({ createReply, deleteReply, auth, question, match }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     description: '',
@@ -36,6 +36,10 @@ const ReplyPreview = ({ createReply, auth, question, match }) => {
     onCloseModal();
   };
 
+  const onDeleteClick = async (replyId) => {
+    await deleteReply(match.params.questionId, replyId);
+  };
+
   const onCloseModal = () => {
     setModalOpen(false);
     setFormData({
@@ -44,7 +48,7 @@ const ReplyPreview = ({ createReply, auth, question, match }) => {
     });
   };
 
-  let reverseArray = question.singleQuestion.replies.map(
+  let reverseRepliesArray = question.singleQuestion.replies.map(
     (item, idx) =>
       question.singleQuestion.replies[
         question.singleQuestion.replies.length - 1 - idx
@@ -68,11 +72,12 @@ const ReplyPreview = ({ createReply, auth, question, match }) => {
           </button>
         </div>
       </div>
-      {reverseArray.map((el) => (
+      {reverseRepliesArray.map((el) => (
         <ReplyItem
           key={el._id}
           el={el}
           owner={auth.user._id === el.user._id ? true : false}
+          onDeleteClick={onDeleteClick}
         />
       ))}
 
@@ -139,6 +144,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     createReply: (data) => dispatch(createReply(data)),
+    deleteReply: (questionId, replyId) =>
+      dispatch(deleteReply(questionId, replyId)),
   };
 };
 
