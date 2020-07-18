@@ -7,7 +7,7 @@ import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
 import { createReply } from '../../actions/question';
 
-const ReplyPreview = ({ createReply, question, match }) => {
+const ReplyPreview = ({ createReply, auth, question, match }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     description: '',
@@ -43,6 +43,14 @@ const ReplyPreview = ({ createReply, question, match }) => {
       image: '',
     });
   };
+
+  let reverseArray = question.singleQuestion.replies.map(
+    (item, idx) =>
+      question.singleQuestion.replies[
+        question.singleQuestion.replies.length - 1 - idx
+      ]
+  );
+
   return (
     <>
       <div className="reply-preview-heading">
@@ -60,9 +68,15 @@ const ReplyPreview = ({ createReply, question, match }) => {
           </button>
         </div>
       </div>
-      {question.singleQuestion.replies.reverse().map((el) => (
-        <ReplyItem key={el._id} el={el} />
+      {reverseArray.map((el) => (
+        <ReplyItem
+          key={el._id}
+          el={el}
+          owner={auth.user._id === el.user._id ? true : false}
+        />
       ))}
+
+      {/* <ReplyItem key={el._id} el={el} /> */}
 
       <Modal open={modalOpen} onClose={onCloseModal} center>
         <h3 className="modal-title" style={{ padding: '0 1.2rem' }}>
@@ -117,6 +131,7 @@ const ReplyPreview = ({ createReply, question, match }) => {
 
 const mapStateToProps = (state) => {
   return {
+    auth: state.auth,
     question: state.question,
   };
 };

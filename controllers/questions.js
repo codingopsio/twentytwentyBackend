@@ -1,6 +1,6 @@
-const Question = require("../models/Question");
-const Webinar = require("../models/Webinar");
-const ErrorResponse = require("../utils/errorResponse");
+const Question = require('../models/Question');
+const Webinar = require('../models/Webinar');
+const ErrorResponse = require('../utils/errorResponse');
 
 // @desc - Get all questions
 // @route - GET api/v1/ questions
@@ -12,8 +12,8 @@ exports.getQuestions = async (req, res, next) => {
       const questions = await Question.find({
         webinar: req.params.webinarId,
       }).populate({
-        path: "user",
-        select: "name",
+        path: 'user',
+        select: 'name',
       });
 
       return res.status(200).json({
@@ -29,7 +29,7 @@ exports.getQuestions = async (req, res, next) => {
       // For pagination, If **select** is present in the query, then deleting that
       if (req.query.select) {
         const selectFieldDelete = delete queryString.select;
-        fields = req.query.select.split(",").join(" ");
+        fields = req.query.select.split(',').join(' ');
       }
 
       // For pagination, If **page** is present in the query, then deleting that
@@ -44,7 +44,7 @@ exports.getQuestions = async (req, res, next) => {
 
       // Filtering for category - eg: Fullstack, Frontend, Nodejs
       let query = JSON.stringify(queryString);
-      query = query.replace("in", "$in");
+      query = query.replace('in', '$in');
 
       //  Pagination Logic
       const page = parseInt(req.query.page, 10) || 1;
@@ -71,8 +71,8 @@ exports.getQuestions = async (req, res, next) => {
         .limit(limit)
         .select(fields)
         .populate({
-          path: "webinar",
-          select: "title description",
+          path: 'webinar',
+          select: 'title description',
         });
 
       let questions = await query;
@@ -96,16 +96,16 @@ exports.getQuestion = async (req, res, next) => {
   try {
     const question = await Question.findById(req.params.questionId)
       .populate({
-        path: "webinar",
-        select: "title description",
+        path: 'webinar',
+        select: 'title description',
       })
       .populate({
-        path: "user",
-        select: "name",
+        path: 'user',
+        select: 'name',
       });
 
     if (!question) {
-      return next(new ErrorResponse("Sorry, no question found", 404));
+      return next(new ErrorResponse('Sorry, no question found', 404));
     }
 
     res.status(200).json({
@@ -125,7 +125,7 @@ exports.createQuestion = async (req, res, next) => {
     const webinar = await Webinar.findById(req.params.webinarId);
 
     if (!webinar) {
-      return next(new ErrorResponse("Sorry, no webinar found", 404));
+      return next(new ErrorResponse('Sorry, no webinar found', 404));
     }
 
     req.body.webinar = req.params.webinarId;
@@ -139,7 +139,7 @@ exports.createQuestion = async (req, res, next) => {
     } else {
       file = req.files.file;
       //   Make sure the image is a photo
-      if (!file.mimetype.startsWith("image")) {
+      if (!file.mimetype.startsWith('image')) {
         return next(new ErrorResponse(`Please upload an Image file`, 400));
       }
 
@@ -181,13 +181,13 @@ exports.updateQuestion = async (req, res, next) => {
     let question = await Question.findById(req.params.questionId);
 
     if (!question) {
-      return next(new ErrorResponse("No question found with this ID", 404));
+      return next(new ErrorResponse('No question found with this ID', 404));
     }
 
     // Checking ownership of the review, i.e user can update his/her own review
     if (question.user.toString() !== req.user.id) {
       return next(
-        new ErrorResponse("Not authorized to update this review", 400)
+        new ErrorResponse('Not authorized to update this review', 400)
       );
     }
 
@@ -199,7 +199,7 @@ exports.updateQuestion = async (req, res, next) => {
     } else {
       file = req.files.file;
       //   Make sure the image is a photo
-      if (!file.mimetype.startsWith("image")) {
+      if (!file.mimetype.startsWith('image')) {
         return next(new ErrorResponse(`Please upload an Image file`, 400));
       }
 
@@ -244,13 +244,13 @@ exports.deleteQuestion = async (req, res, next) => {
     let question = await Question.findById(req.params.questionId);
 
     if (!question) {
-      return next(new ErrorResponse("No question found with this ID", 404));
+      return next(new ErrorResponse('No question found with this ID', 404));
     }
 
     // Checking ownership of the review, i.e user can update his/her own review
     if (question.user.toString() !== req.user.id) {
       return next(
-        new ErrorResponse("Not authorized to delete this review", 400)
+        new ErrorResponse('Not authorized to delete this review', 400)
       );
     }
 
@@ -273,7 +273,7 @@ exports.replyQuestion = async (req, res, next) => {
     const question = await Question.findById(req.params.questionId);
 
     if (!question) {
-      return next(new ErrorResponse("Sorry no question found", 404));
+      return next(new ErrorResponse('Sorry no question found', 404));
     }
 
     req.body.user = req.user.id;
@@ -286,7 +286,7 @@ exports.replyQuestion = async (req, res, next) => {
     } else {
       file = req.files.file;
       //   Make sure the image is a photo
-      if (!file.mimetype.startsWith("image")) {
+      if (!file.mimetype.startsWith('image')) {
         return next(new ErrorResponse(`Please upload an Image file`, 400));
       }
 
@@ -336,7 +336,7 @@ exports.deleteReply = async (req, res, next) => {
     const question = await Question.findById(req.params.questionId);
 
     if (!question) {
-      return next(new ErrorResponse("Sorry, no question found", 404));
+      return next(new ErrorResponse('Sorry, no question found', 404));
     }
 
     let findReply = question.replies.find(
@@ -344,12 +344,12 @@ exports.deleteReply = async (req, res, next) => {
     );
 
     if (!findReply) {
-      return next(new ErrorResponse("Sorry, no reply found", 404));
+      return next(new ErrorResponse('Sorry, no reply found', 404));
     }
 
     // check for the ownership
     if (findReply.user._id.toString() !== req.user.id) {
-      return next(new ErrorResponse("Not authorized to take this action", 400));
+      return next(new ErrorResponse('Not authorized to take this action', 400));
     }
 
     // Deleting the reply

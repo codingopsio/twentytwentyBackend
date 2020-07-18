@@ -14,6 +14,12 @@ const ReplyItem = (props) => {
             <p>Stripe with react and Node crash course</p>
             <span>{moment(props.el.date).format('MMM Do YY')}</span>
           </div>
+
+          {props.owner ? (
+            <span>
+              <i className="far fa-trash-alt"></i>
+            </span>
+          ) : null}
         </div>
         <div className="description">
           <p>{props.el.description}</p>
